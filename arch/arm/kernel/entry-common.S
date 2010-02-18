@@ -10,13 +10,14 @@
 
 #include <asm/unistd.h>
 #include <asm/ftrace.h>
+#include <asm/cache.h>
 #include <mach/entry-macro.S>
 #include <asm/unwind.h>
 
 #include "entry-header.S"
 
 
-	.align	5
+	.align	L1_CACHE_SHIFT
 /*
  * This is the fast syscall return path.  We do as little as
  * possible here, and this includes saving r0 back into the SVC
@@ -260,7 +261,7 @@ ENDPROC(ftrace_stub)
 #define A710(code...)
 #endif
 
-	.align	5
+	.align	L1_CACHE_SHIFT
 ENTRY(vector_swi)
 	sub	sp, sp, #S_FRAME_SIZE
 	stmia	sp, {r0 - r12}			@ Calling r0 - r12
@@ -404,7 +405,7 @@ __sys_trace_return:
 	bl	syscall_trace
 	b	ret_slow_syscall
 
-	.align	5
+	.align	L1_CACHE_SHIFT
 #ifdef CONFIG_ALIGNMENT_TRAP
 	.type	__cr_alignment, #object
 __cr_alignment:

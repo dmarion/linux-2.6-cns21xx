@@ -9,9 +9,10 @@
  */
 #include <linux/linkage.h>
 #include <asm/assembler.h>
+#include <asm/cache.h>
 
 	.text
-	.align	5
+	.align	L1_CACHE_SHIFT
 	.word	0
 /*
  * Align the pointer in r0.  r3 contains the number of bytes that we are

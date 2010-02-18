@@ -11,9 +11,10 @@
  */
 #include <linux/linkage.h>
 #include <asm/assembler.h>
+#include <asm/cache.h>
 
 		.text
-		.align	5
+		.align	L1_CACHE_SHIFT
 ENTRY(strrchr)
 		mov	r3, #0
 1:		ldrb	r2, [r0], #1

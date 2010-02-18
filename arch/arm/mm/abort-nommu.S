@@ -1,5 +1,6 @@
 #include <linux/linkage.h>
 #include <asm/assembler.h>
+#include <asm/cache.h>
 /*
  * Function: nommu_early_abort
  *
@@ -12,7 +13,7 @@
  * Note: There is no FSR/FAR on !CPU_CP15_MMU cores.
  *       Just fill zero into the registers.
  */
-	.align	5
+	.align	L1_CACHE_SHIFT
 ENTRY(nommu_early_abort)
 	mov	r0, #0				@ clear r0, r1 (no FSR/FAR)
 	mov	r1, #0

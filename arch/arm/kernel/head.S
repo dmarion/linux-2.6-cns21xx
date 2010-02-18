@@ -21,6 +21,7 @@
 #include <asm/memory.h>
 #include <asm/thread_info.h>
 #include <asm/system.h>
+#include <asm/cache.h>
 
 #ifdef CONFIG_DEBUG_LL
 #include <mach/debug-macro.S>
@@ -373,7 +374,7 @@ ENDPROC(__enable_mmu)
  *
  * other registers depend on the function called upon completion
  */
-	.align	5
+	.align	L1_CACHE_SHIFT
 __turn_mmu_on:
 	mov	r0, r0
 	mcr	p15, 0, r0, c1, c0, 0		@ write control reg

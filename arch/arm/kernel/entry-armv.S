@@ -23,6 +23,7 @@
 #include <asm/unwind.h>
 #include <asm/unistd.h>
 #include <asm/tls.h>
+#include <asm/cache.h>
 
 #include "entry-header.S"
 
@@ -167,7 +168,7 @@ ENDPROC(__und_invalid)
 	stmia	r5, {r0 - r4}
 	.endm
 
-	.align	5
+	.align	L1_CACHE_SHIFT
 __dabt_svc:
 	svc_entry
 
@@ -215,7 +216,7 @@ __dabt_svc:
  UNWIND(.fnend		)
 ENDPROC(__dabt_svc)
 
-	.align	5
+	.align	L1_CACHE_SHIFT
 __irq_svc:
 	svc_entry
 
@@ -259,7 +260,7 @@ svc_preempt:
 	b	1b
 #endif
 
-	.align	5
+	.align	L1_CACHE_SHIFT
 __und_svc:
 #ifdef CONFIG_KPROBES
 	@ If a kprobe is about to simulate a "stmdb sp..." instruction,
@@ -305,7 +306,7 @@ __und_svc:
  UNWIND(.fnend		)
 ENDPROC(__und_svc)
 
-	.align	5
+	.align	L1_CACHE_SHIFT
 __pabt_svc:
 	svc_entry
 
@@ -341,7 +342,7 @@ __pabt_svc:
  UNWIND(.fnend		)
 ENDPROC(__pabt_svc)
 
-	.align	5
+	.align	L1_CACHE_SHIFT
 .LCcralign:
 	.word	cr_alignment
 #ifdef MULTI_DABORT
@@ -414,7 +415,7 @@ ENDPROC(__pabt_svc)
 #endif
 	.endm
 
-	.align	5
+	.align	L1_CACHE_SHIFT
 __dabt_usr:
 	usr_entry
 	kuser_cmpxchg_check
@@ -446,7 +447,7 @@ __dabt_usr:
  UNWIND(.fnend		)
 ENDPROC(__dabt_usr)
 
-	.align	5
+	.align	L1_CACHE_SHIFT
 __irq_usr:
 	usr_entry
 	kuser_cmpxchg_check
@@ -475,7 +476,7 @@ ENDPROC(__irq_usr)
 
 	.ltorg
 
-	.align	5
+	.align	L1_CACHE_SHIFT
 __und_usr:
 	usr_entry
 
@@ -691,7 +692,7 @@ __und_usr_unknown:
 	b	do_undefinstr
 ENDPROC(__und_usr_unknown)
 
-	.align	5
+	.align	L1_CACHE_SHIFT
 __pabt_usr:
 	usr_entry
 
@@ -805,7 +806,7 @@ ENDPROC(__switch_to)
 #endif
 	.endm
 
-	.align	5
+	.align	L1_CACHE_SHIFT
 	.globl	__kuser_helper_start
 __kuser_helper_start:
 
@@ -845,7 +846,7 @@ __kuser_memory_barrier:				@ 0xffff0fa0
 	smp_dmb
 	usr_ret	lr
 
-	.align	5
+	.align	L1_CACHE_SHIFT
 
 /*
  * Reference prototype:
@@ -972,7 +973,7 @@ kuser_cmpxchg_fixup:
 
 #endif
 
-	.align	5
+	.align	L1_CACHE_SHIFT
 
 /*
  * Reference prototype:
@@ -1050,7 +1051,7 @@ __kuser_helper_end:
  * of which is copied into r0 for the mode specific abort handler.
  */
 	.macro	vector_stub, name, mode, correction=0
-	.align	5
+	.align	L1_CACHE_SHIFT
 
 vector_\name:
 	.if \correction
@@ -1181,7 +1182,7 @@ __stubs_start:
 	.long	__und_invalid			@  e
 	.long	__und_invalid			@  f
 
-	.align	5
+	.align	L1_CACHE_SHIFT
 
 /*=============================================================================
  * Undefined FIQs
@@ -1211,7 +1212,7 @@ vector_addrexcptn:
  * We group all the following data together to optimise
  * for CPUs with separate I & D caches.
  */
-	.align	5
+	.align	L1_CACHE_SHIFT
 
 .LCvswi:
 	.word	vector_swi

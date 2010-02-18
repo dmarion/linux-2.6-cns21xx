@@ -10,9 +10,10 @@
 #include <linux/linkage.h>
 #include <asm/assembler.h>
 #include <asm/errno.h>
+#include <asm/cache.h>
 
 	.text
-	.align	5
+	.align	L1_CACHE_SHIFT
 
 /* Prototype: unsigned long __strnlen_user(const char *str, long n)
  * Purpose  : get length of a string in user memory

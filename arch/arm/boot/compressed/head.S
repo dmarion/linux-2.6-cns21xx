@@ -9,6 +9,7 @@
  * published by the Free Software Foundation.
  */
 #include <linux/linkage.h>
+#include <asm/cache.h>
 
 /*
  * Debugging stuff
@@ -355,7 +356,7 @@ params:		ldr	r0, =0x10000100		@ params_phys for RPC
  * This routine must preserve:
  *  r4, r5, r6, r7, r8
  */
-		.align	5
+		.align	L1_CACHE_SHIFT
 cache_on:	mov	r3, #8			@ cache_on function
 		b	call_cache_fn
 
@@ -544,7 +545,7 @@ __common_mmu_cache_on:
 		mcr	p15, 0, r3, c2, c0, 0	@ load page table pointer
 		mcr	p15, 0, r1, c3, c0, 0	@ load domain access control
 		b	1f
-		.align	5			@ cache line aligned
+		.align	L1_CACHE_SHIFT		@ cache line aligned
 1:		mcr	p15, 0, r0, c1, c0, 0	@ load control register
 		mrc	p15, 0, r0, c1, c0, 0	@ and read it back to
 		sub	pc, lr, r0, lsr #32	@ properly flush pipeline
@@ -563,7 +564,7 @@ __common_mmu_cache_on:
  * r8     = atags pointer
  * r9-r12,r14 = corrupted
  */
-		.align	5
+		.align	L1_CACHE_SHIFT
 reloc_start:	add	r9, r5, r0
 		sub	r9, r9, #128		@ do not copy the stack
 		debug_reloc_start
@@ -793,7 +794,7 @@ proc_types:
  * This routine must preserve:
  *  r4, r6, r7
  */
-		.align	5
+		.align	L1_CACHE_SHIFT
 cache_off:	mov	r3, #12			@ cache_off function
 		b	call_cache_fn
 
@@ -868,7 +869,7 @@ __armv3_mmu_cache_off:
  * This routine must preserve:
  *  r0, r4, r5, r6, r7
  */
-		.align	5
+		.align	L1_CACHE_SHIFT
 cache_clean_flush:
 		mov	r3, #16
 		b	call_cache_fn

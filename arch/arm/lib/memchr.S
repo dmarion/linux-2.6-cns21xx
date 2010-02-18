@@ -11,9 +11,10 @@
  */
 #include <linux/linkage.h>
 #include <asm/assembler.h>
+#include <asm/cache.h>
 
 	.text
-	.align	5
+	.align	L1_CACHE_SHIFT
 ENTRY(memchr)
 1:	subs	r2, r2, #1
 	bmi	2f
