@@ -293,6 +293,13 @@ config ARCH_CLPS711X
 	help
 	  Support for Cirrus Logic 711x/721x based boards.
 
+config ARCH_CNS21XX
+	bool "Cavium ECONA CNS21xx"
+	select CPU_FA526
+	select ARCH_USES_GETTIMEOFFSET
+	help
+	  Support for Cavium Networks ECONA CNS21XX platform (ex STAR STR81XX)
+
 config ARCH_CNS3XXX
 	bool "Cavium Networks CNS3XXX family"
 	select CPU_V6
@@ -857,6 +864,8 @@ source "arch/arm/mach-at91/Kconfig"
 source "arch/arm/mach-bcmring/Kconfig"
 
 source "arch/arm/mach-clps711x/Kconfig"
+
+source "arch/arm/mach-cns21xx/Kconfig"
 
 source "arch/arm/mach-cns3xxx/Kconfig"
 

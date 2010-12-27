@@ -673,6 +673,10 @@ retry:
 
 	periodic_reinit (ohci);
 
+#ifdef CONFIG_ARCH_CNS21XX
+	ohci_writel (ohci, ohci->fminterval, &ohci->regs->fminterval);
+#endif
+
 	/* some OHCI implementations are finicky about how they init.
 	 * bogus values here mean not even enumeration could work.
 	 */
@@ -1055,6 +1059,11 @@ MODULE_LICENSE ("GPL");
 #ifdef CONFIG_ARCH_AT91
 #include "ohci-at91.c"
 #define PLATFORM_DRIVER		ohci_hcd_at91_driver
+#endif
+
+#ifdef CONFIG_ARCH_CNS21XX
+#include "ohci-cns21xx.c"
+#define PLATFORM_DRIVER		ohci_hcd_cns21xx_driver
 #endif
 
 #ifdef CONFIG_ARCH_PNX4008

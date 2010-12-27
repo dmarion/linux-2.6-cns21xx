@@ -53,9 +53,11 @@ int hcd_buffer_create(struct usb_hcd *hcd)
 	char		name[16];
 	int 		i, size;
 
+#if !defined(CONFIG_ARCH_CNS21XX)
 	if (!hcd->self.controller->dma_mask &&
 	    !(hcd->driver->flags & HCD_LOCAL_MEM))
 		return 0;
+#endif
 
 	for (i = 0; i < HCD_BUFFER_POOLS; i++) {
 		size = pool_max[i];
