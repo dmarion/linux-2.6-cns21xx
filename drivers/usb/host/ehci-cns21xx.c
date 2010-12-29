@@ -46,9 +46,8 @@ static int ehci_cns21xx_setup(struct usb_hcd *hcd)
 	if (retval)
 		return retval;
 
-	printk("ehci_cns21xx_setup: ehci_init start.\n");
 	retval =  ehci_init(hcd);
-	printk("ehci_cns21xx_setup: ehci_init done.\n");
+	
 	return retval;
 }
 
@@ -66,19 +65,11 @@ static int ehci_resume (struct usb_hcd *hcd)
 }
 #endif
 
-static irqreturn_t cns21xx_ehci_irq (struct usb_hcd *hcd) {
-	irqreturn_t retval;
-	printk("ehci_ehci_irq: ehci_irq start.\n");
-	retval = ehci_irq(hcd);
-	printk("ehci_ehci_irq: ehci_irq stop.\n");
-	return retval;
-}
-
 static const struct hc_driver ehci_cns21xx_hc_driver = {
 	.description 		= hcd_name,
         .product_desc 		= "Cavium ECONA CNS21xx On-Chip EHCI Host Controller",
         .hcd_priv_size 		= sizeof(struct ehci_hcd),
-	.irq 			= cns21xx_ehci_irq,
+	.irq 			= ehci_irq,
 	.flags 			= HCD_MEMORY | HCD_USB2,
 	.reset 			= ehci_cns21xx_setup, 
 	.start 			= ehci_run,
