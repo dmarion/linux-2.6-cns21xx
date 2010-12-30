@@ -331,6 +331,13 @@ config IMX2_WDT
 	  To compile this driver as a module, choose M here: the
 	  module will be called imx2_wdt.
 
+config FA_WATCHDOG
+	tristate "Faraday watchdog"
+	depends on ARCH_GEMINI
+	help
+	  Say Y here if you want support for the built-in watchdog timer
+	  found in some Faraday FA526 based SoCs.
+
 # AVR32 Architecture
 
 config AT32AP700X_WDT
