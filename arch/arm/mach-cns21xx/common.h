@@ -19,5 +19,6 @@ extern struct sys_timer cns21xx_timer;
 int __init cns21xx_register_uart0(void);
 int __init cns21xx_register_uart1(void);
 int __init cns21xx_register_usb(void);
+int __init cns21xx_register_wdt(void);
 
 #endif /* _MACH_CNS21XX_COMMON_H */

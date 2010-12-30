@@ -333,7 +333,7 @@ config IMX2_WDT
 
 config FA_WATCHDOG
 	tristate "Faraday watchdog"
-	depends on ARCH_GEMINI
+	depends on ARCH_GEMINI || ARCH_CNS21XX
 	help
 	  Say Y here if you want support for the built-in watchdog timer
 	  found in some Faraday FA526 based SoCs.

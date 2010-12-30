@@ -11,6 +11,7 @@
 #include <linux/init.h>
 #include <linux/platform_device.h>
 #include <linux/serial_8250.h>
+#include <linux/fa_wdt.h>
 
 #include <mach/irqs.h>
 #include <mach/hardware.h>
@@ -76,4 +77,33 @@ int __init cns21xx_register_uart1(void)
 {
 	HAL_MISC_ENABLE_UART1_PINS();
 	return platform_device_register(&cns21xx_uart1_device);
+}
+
+static struct resource cns21xx_wdt_resources[] = {
+	{
+		.start	= CNS21XX_WDT_BASE,
+		.end	= CNS21XX_WDT_BASE + SZ_4K - 1,
+		.flags	= IORESOURCE_MEM,
+	},
+};
+
+#define CNS21XX_WDT_CLOCK	10	/* 10 Hz */
+
+static struct fa_wdt_platform_data cns21xx_wdt_data = {
+	.clock	= CNS21XX_WDT_CLOCK,
+};
+
+static struct platform_device cns21xx_wdt_device = {
+	.name			= "fa-wdt",
+	.id			= -1,
+	.resource 		= cns21xx_wdt_resources,
+	.num_resources		= ARRAY_SIZE(cns21xx_wdt_resources),
+	.dev = {
+		.platform_data	= &cns21xx_wdt_data,
+	},
+};
+
+int __init cns21xx_register_wdt(void)
+{
+	return platform_device_register(&cns21xx_wdt_device);
 }
