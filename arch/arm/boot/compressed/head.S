@@ -71,6 +71,13 @@ wait:		mrc	p14, 0, pc, c0, c1, 0
 		mov	\rb, #0x50000000
 		add	\rb, \rb, #0x4000 * CONFIG_S3C_LOWLEVEL_UART_PORT
 		.endm
+#elif defined(CONFIG_ARCH_CNS21XX)
+		.macro	loadsp, rb
+		mov	\rb, #0x78000000
+		.endm
+		.macro	writeb, rb
+		strb	\rb, [r3, #0]
+		.endm
 #else
 		.macro	loadsp,	rb, tmp
 		addruart \rb, \tmp

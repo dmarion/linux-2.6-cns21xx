@@ -1,0 +1,49 @@
+if ARCH_CNS21XX
+
+menu "Cavium ECONA CNS21XX Options"
+
+config MACH_NSK330
+	bool "Support for NS-K330 NAS"
+	select PCI
+	help
+	  Support for the NS-K330 and other CNS2132 (ex STAR STR8132) based 
+	  NAS devices (WLXKJ652, Ritmo LN-86BT, etc.)
+
+choice
+	prompt "DRAM SIZE"
+	default CNS21XX_DRAM_16M
+
+config CNS21XX_DRAM_16M
+	bool "16MBytes"
+
+config CNS21XX_DRAM_32M
+	bool "32MBytes"
+
+config CNS21XX_DRAM_64M
+	bool "64MBytes"
+
+endchoice
+
+if PCI
+choice
+	prompt "PCI Frequency"
+	default STR21XX_PCI33M
+
+config STR21XX_PCI33M
+	bool "PCI_33Mhz"
+
+config STR21XX_PCI66M
+	bool "PCI_66Mhz"
+
+endchoice
+endif
+
+config STR21XX_INFO
+	bool "CNS21XX Infomation at /proc/cns21xx/info"
+
+config STR21XX_USBD_REBOOT_INTHANDLER
+	tristate "USB Mass Storage Device"
+
+endmenu
+
+endif

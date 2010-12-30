@@ -444,6 +444,9 @@ struct spi_transfer {
 	u8		bits_per_word;
 	u16		delay_usecs;
 	u32		speed_hz;
+#ifdef CONFIG_ARCH_CNS21XX
+	unsigned	last_in_message_list;
+#endif
 
 	struct list_head transfer_list;
 };
