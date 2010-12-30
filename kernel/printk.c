@@ -48,6 +48,10 @@
 #define for_each_console(con) \
 	for (con = console_drivers; con != NULL; con = con->next)
 
+#ifdef CONFIG_DEBUG_LL
+extern void printascii(char *);
+#endif /* CONFIG_DEBUG_LL */
+
 /*
  * Architectures can override it:
  */
@@ -779,6 +783,10 @@ asmlinkage int vprintk(const char *fmt, va_list args)
 			}
 		}
 	}
+
+#ifdef CONFIG_DEBUG_LL
+	printascii(printk_buf);
+#endif
 
 	/*
 	 * Copy the output into log_buf.  If the caller didn't provide
