@@ -158,6 +158,14 @@ config SPI_IMX_VER_0_7
 config SPI_IMX_VER_2_3
 	def_bool y if ARCH_MX51
 
+config SPI_CNS21XX
+	tristate "Cavium Netowrks CNS21xx SPI master"
+	depends on ARCH_CNS21XX && EXPERIMENTAL
+	select SPI_BITBANG
+	help
+	  This driver supports the buil-in SPI controller of the Cavium Networks
+	  CNS21xx SoCs.
+
 config SPI_IMX
 	tristate "Freescale i.MX SPI controllers"
 	depends on ARCH_MXC

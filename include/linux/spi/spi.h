@@ -445,6 +445,8 @@ struct spi_transfer {
 	u16		delay_usecs;
 	u32		speed_hz;
 
+	unsigned	last_in_message_list;
+
 	struct list_head transfer_list;
 };
 
