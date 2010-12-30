@@ -404,6 +404,7 @@ struct ohci_hcd {
 #define	OHCI_QUIRK_AMD_ISO	0x200			/* ISO transfers*/
 #define	OHCI_QUIRK_AMD_PREFETCH	0x400			/* pre-fetch for ISO transfer */
 #define	OHCI_QUIRK_SHUTDOWN	0x800			/* nVidia power bug */
+#define OHCI_QUIRK_INIT_FMINTERVAL 0x1000		/* fminterval must be initialized */
 	// there are also chip quirks/bugs in init logic
 
 	struct work_struct	nec_work;	/* Worker for NEC quirk */

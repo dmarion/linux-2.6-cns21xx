@@ -589,7 +589,6 @@ static int ohci_run (struct ohci_hcd *ohci)
 
 	/* boot firmware should have set this up (5.1.1.3.1) */
 	if (first) {
-
 		val = ohci_readl (ohci, &ohci->regs->fminterval);
 		ohci->fminterval = val & 0x3fff;
 		if (ohci->fminterval != FI)
@@ -672,6 +671,9 @@ retry:
 	ohci_writel (ohci, (u32) ohci->hcca_dma, &ohci->regs->hcca);
 
 	periodic_reinit (ohci);
+
+	if (ohci->flags & OHCI_QUIRK_INIT_FMINTERVAL)
+		ohci_writel (ohci, ohci->fminterval, &ohci->regs->fminterval);
 
 	/* some OHCI implementations are finicky about how they init.
 	 * bogus values here mean not even enumeration could work.
@@ -1065,6 +1067,11 @@ MODULE_LICENSE ("GPL");
 #ifdef CONFIG_ARCH_DAVINCI_DA8XX
 #include "ohci-da8xx.c"
 #define PLATFORM_DRIVER		ohci_hcd_da8xx_driver
+#endif
+
+#ifdef CONFIG_ARCH_CNS21XX
+#include "ohci-cns21xx.c"
+#define PLATFORM_DRIVER		ohci_cns21xx_driver
 #endif
 
 #if defined(CONFIG_CPU_SUBTYPE_SH7720) || \

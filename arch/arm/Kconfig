@@ -299,6 +299,7 @@ config ARCH_CNS21XX
 	select PLAT_FA_GPIO
 	select ARCH_REQUIRE_GPIOLIB
 	select ARM_L1_CACHE_SHIFT_4
+	select USB_ARCH_HAS_OHCI
 	help
 	  Support for Cavium Networks CNS21xx family.
 
