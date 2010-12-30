@@ -6,4 +6,7 @@ endmenu
 config CNS21XX_DEV_USB
 	def_bool n
 
+config CNS21XX_DEV_SPI_MASTER
+	def_bool n
+
 endif
