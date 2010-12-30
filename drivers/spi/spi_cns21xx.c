@@ -41,7 +41,7 @@
 #include <mach/hardware.h>
 #include <mach/cns21xx.h>
 
-#define CNS21XX_SPI_DEBUG
+//#define CNS21XX_SPI_DEBUG
 
 struct cns21xx_spi {
 	/* bitbang has to be first */
@@ -82,8 +82,6 @@ static inline u8 cns21xx_spi_rx_buffer_full(void)
 
 static u8 cns21xx_spi_tx_rx(u8 tx_channel, u8 tx_eof_flag, u32 tx_data, u32 *rx_data)
 {
-	printk("DAMJAN cns21xx_spi_tx_rx start\n");
-	
 	u8 rx_channel;
 	u8 rx_eof_flag;
 
@@ -112,21 +110,17 @@ static u8 cns21xx_spi_tx_rx(u8 tx_channel, u8 tx_eof_flag, u32 tx_data, u32 *rx_
 	} else {
 		return 1;
 	}
-	printk("DAMJAN cns21xx_spi_tx_rx end\n");
 }
 
 static inline struct cns21xx_spi *to_hw(struct spi_device *sdev)
 {
-	printk("DAMJAN to_hw start\n");
 	return spi_master_get_devdata(sdev->master);
-	printk("DAMJAN to_hw start\n");
 }
 
 static void cns21xx_spi_chipselect(struct spi_device *spi, int value)
 {
 	unsigned int spi_config;
 	int i;
-	printk("DAMJAN cns21xx_spi_chipselect start\n");
 
 	switch (value) {
 	case BITBANG_CS_INACTIVE:
@@ -163,18 +157,14 @@ static void cns21xx_spi_chipselect(struct spi_device *spi, int value)
 
 		break;
 	}
-	printk("DAMJAN cns21xx_spi_chipselect end\n");
 }
 
 static int cns21xx_spi_setup(struct spi_device *spi)
 {
-	printk("DAMJAN cns21xx_spi_setup start\n");
-	
 	if (!spi->bits_per_word)
 		spi->bits_per_word = 8;
 
 	return 0;
-	printk("DAMJAN cns21xx_spi_setup end\n");
 }
 
 static int cns21xx_spi_txrx(struct spi_device *spi, struct spi_transfer *t)
@@ -186,7 +176,9 @@ static int cns21xx_spi_txrx(struct spi_device *spi, struct spi_transfer *t)
 	hw->rx = t->rx_buf;
 	hw->len = t->len;
 	hw->count = 0;
-	printk("DAMJAN cns21xx_spi_txrx start\n");
+	
+	//printk("DAMJAN cns21xx_spi_txrx t->transfer_list=0x%p t->last_in_message_list=%i t->len=%i\n", 
+	//		t->transfer_list, t->last_in_message_list, t->len);
 
 #ifdef CNS21XX_SPI_DEBUG
 	printk("[CNS21XX_SPI_DEBUG] txrx: tx %p, rx %p, len %d\n", t->tx_buf, t->rx_buf, t->len);
@@ -249,13 +241,11 @@ static int cns21xx_spi_txrx(struct spi_device *spi, struct spi_transfer *t)
 	}
 
 done:
-	printk("DAMJAN cns21xx_spi_txrx end\n");
 	return t->len;
 }
 
 static int cns21xx_spi_setupxfer(struct spi_device *spi,  struct spi_transfer *t)
 {
-	printk("DAMJAN cns21xx_spi_setupxfer\n");
 	return 0;
 }
 
@@ -266,7 +256,6 @@ static int __init cns21xx_spi_probe(struct platform_device *pdev)
 	struct spi_master *master;
 	unsigned int receive_data;
 	int err = 0;
-	printk("DAMJAN cns21xx_spi_probe start\n");
 	master = spi_alloc_master(&pdev->dev, sizeof(struct cns21xx_spi));
 	if (master == NULL) {
 		dev_err(&pdev->dev, "No memory for spi_master\n");
@@ -342,7 +331,6 @@ static int __init cns21xx_spi_probe(struct platform_device *pdev)
 	printk("[CNS21XX_SPI_DEBUG] flash[%02d]:0x%02x\n", i, rx_data1 & 0xff);
 }
 #endif
-	printk("DAMJAN cns21xx_spi_probe end\n");
 
 	return 0;
 
