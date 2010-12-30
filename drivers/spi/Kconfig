@@ -100,6 +100,13 @@ config SPI_BUTTERFLY
 	  inexpensive battery powered microcontroller evaluation board.
 	  This same cable can be used to flash new firmware.
 
+config SPI_CNS21XX
+	tristate "Cavium ECONA CNS21xx SPI controller driver"
+	depends on SPI_MASTER && ARCH_CNS21XX
+	select SPI_BITBANG
+	help
+	  Cavium ECONA CNS21xx SPI controller driver.
+
 config SPI_COLDFIRE_QSPI
 	tristate "Freescale Coldfire QSPI controller"
 	depends on (M520x || M523x || M5249 || M527x || M528x || M532x)

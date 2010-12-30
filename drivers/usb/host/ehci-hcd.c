@@ -725,6 +725,15 @@ static int ehci_run (struct usb_hcd *hcd)
 	up_write(&ehci_cf_port_reset_rwsem);
 	ehci->last_periodic_enable = ktime_get_real();
 
+#ifdef CONFIG_ARCH_CNS21XX
+	/*
+	 * To prevent high speed device being recognized to full speed device,
+	 * need to add this delay. If this 250 ms delay removed, there are
+	 * 20% probability connect as full speed device when plug a hogh speed
+	 * device.
+	 */
+	mdelay(250);
+#endif
 	temp = HC_VERSION(ehci_readl(ehci, &ehci->caps->hc_capbase));
 	ehci_info (ehci,
 		"USB %x.%x started, EHCI %x.%02x%s\n",
@@ -766,7 +775,11 @@ static irqreturn_t ehci_irq (struct usb_hcd *hcd)
 	masked_status = status & INTR_MASK;
 	if (!masked_status) {		/* irq sharing? */
 		spin_unlock(&ehci->lock);
+#ifdef CONFIG_VIC_INTERRUPT
+		return IRQ_HANDLED;
+#else
 		return IRQ_NONE;
+#endif
 	}
 
 	/* clear (just) interrupts */
@@ -1174,6 +1187,11 @@ MODULE_LICENSE ("GPL");
 #ifdef CONFIG_ARCH_OMAP3
 #include "ehci-omap.c"
 #define        PLATFORM_DRIVER         ehci_hcd_omap_driver
+#endif
+
+#ifdef CONFIG_ARCH_CNS21XX
+#include "ehci-cns21xx.c"
+#define        PLATFORM_DRIVER         ehci_cns21xx_driver
 #endif
 
 #ifdef CONFIG_PPC_PS3
