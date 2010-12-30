@@ -2551,6 +2551,8 @@ config PCH_GBE
 	  to Gigabit Ethernet.
 	  This driver enables Gigabit Ethernet function.
 
+source "drivers/net/cns21xx/Kconfig"
+
 endif # NETDEV_1000
 
 #
