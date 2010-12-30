@@ -1,6 +1,16 @@
 if ARCH_CNS21XX
 
 menu "Cavium Networks CNS21xx based machines"
+
+config MACH_NS_K330
+	bool "NS-K330 NAS"
+	select CNS21XX_DEV_GEC
+	select CNS21XX_DEV_SPI_MASTER
+	select CNS21XX_DEV_USB
+	help
+	  Say Y here if you intend to run this kernel on the
+	  NS-K330 NAS board.
+
 endmenu
 
 config CNS21XX_DEV_GEC

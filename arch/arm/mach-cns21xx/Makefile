@@ -12,4 +12,4 @@ obj-$(CONFIG_CNS21XX_DEV_USB)		+= dev-usb.o
 obj-$(CONFIG_CNS21XX_DEV_SPI_MASTER)	+= dev-spi-master.o
 
 # machine specific files
-
+obj-$(CONFIG_MACH_NS_K330)		+= mach-ns-k330.o
