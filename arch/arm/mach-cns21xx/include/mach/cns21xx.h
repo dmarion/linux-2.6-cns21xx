@@ -25,13 +25,11 @@
 #ifndef __MACH_CNS21XX_H__
 #define __MACH_CNS21XX_H__
 
-
 /*
  *  Functions
  */
 
 extern void cns21xx_map_io(void);
-extern void cns21xx_register_map_desc(struct map_desc *map, int count);
 extern void cns21xx_init_irq(void);
 extern struct sys_timer cns21xx_timer;
 extern void cns21xx_early_init(void);

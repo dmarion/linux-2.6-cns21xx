@@ -28,12 +28,26 @@
 #include <mach/hardware.h>
 #include <mach/cns21xx.h>
 
+static int ehci_cns21xx_reinit(struct ehci_hcd *ehci)
+{
+	
+	/* Enable EHCI */ 
+	__raw_writel(0x106, SYSVA_USB20_CONFIG_BASE_ADDR + 0x04);
 
-static int ehci_cns21xx_setup(struct usb_hcd *hcd)
+	/* Set FIFO buffer to 512, bit 17 not docummented */ 
+	__raw_writel((3 << 5)  | 0x20000, SYSVA_USB20_CONFIG_BASE_ADDR + 0x40);
+
+	mdelay(100);
+	ehci_port_power(ehci, 0);
+	return 0;
+}
+
+static int ehci_cns21xx_reset(struct usb_hcd *hcd)
 {
 	struct ehci_hcd *ehci = hcd_to_ehci(hcd);
 	int retval;
 
+	printk("ehci_cns21xx_reset init\n");
 	ehci->caps = hcd->regs;
 	ehci->regs = hcd->regs + HC_LENGTH(ehci_readl(ehci, &ehci->caps->hc_capbase));
 	dbg_hcs_params(ehci, "reset");
@@ -45,9 +59,13 @@ static int ehci_cns21xx_setup(struct usb_hcd *hcd)
 	retval = ehci_halt(ehci);
 	if (retval)
 		return retval;
-
 	retval =  ehci_init(hcd);
-	
+
+	ehci->sbrn = 0x20;
+	ehci_reset(ehci);
+
+	retval = ehci_cns21xx_reinit(ehci);
+	printk("ehci_cns21xx_reset return\n");
 	return retval;
 }
 
@@ -65,13 +83,54 @@ static int ehci_resume (struct usb_hcd *hcd)
 }
 #endif
 
+static int __devinit usb_cns21xx_probe(const struct hc_driver *driver,
+		      struct platform_device *pdev)
+{
+	struct usb_hcd *hcd;
+	int retval = 0;
+	//struct ehci_hcd *ehci;
+	int irq;
+
+	/* CNS21xx USB20 Register Init */
+	__raw_writel(0x106, SYSVA_USB20_CONFIG_BASE_ADDR + 0x04);
+	__raw_writel((3 << 5) | 0x20000, SYSVA_USB20_OPERATION_BASE_ADDR + 0x40);
+	mdelay(100);
+
+	hcd = usb_create_hcd(driver, &pdev->dev, dev_name(&pdev->dev));
+	if (!hcd) { 
+		retval = -ENOMEM;
+		goto err1;
+	}
+
+	hcd->regs = (unsigned int *)SYSVA_USB20_OPERATION_BASE_ADDR;
+	hcd->rsrc_start = SYSPA_USB20_OPERATION_BASE_ADDR;
+	hcd->rsrc_len = 4096;
+	hcd->driver = driver;
+
+	irq = platform_get_irq(pdev, 0);
+	if (irq < 0)
+		goto err2;
+				
+	retval = usb_add_hcd(hcd, irq, IRQF_SHARED);
+	if (retval != 0)
+		goto err2;
+			
+	return retval;
+
+err2:
+	printk("cns21xx ehci probe failed, %d\n", retval);
+	usb_put_hcd(hcd);
+err1:
+	return retval;
+}
+
 static const struct hc_driver ehci_cns21xx_hc_driver = {
 	.description 		= hcd_name,
         .product_desc 		= "Cavium ECONA CNS21xx On-Chip EHCI Host Controller",
         .hcd_priv_size 		= sizeof(struct ehci_hcd),
 	.irq 			= ehci_irq,
 	.flags 			= HCD_MEMORY | HCD_USB2,
-	.reset 			= ehci_cns21xx_setup, 
+	.reset 			= ehci_cns21xx_reset, 
 	.start 			= ehci_run,
 	.stop			= ehci_stop,
 	.shutdown		= ehci_shutdown,
@@ -92,41 +151,15 @@ static const struct hc_driver ehci_cns21xx_hc_driver = {
 	.clear_tt_buffer_complete	= ehci_clear_tt_buffer_complete,
 };
 
-
 static int __devinit ehci_cns21xx_probe(struct platform_device *pdev)
 {
-	struct usb_hcd *hcd;
-	const struct hc_driver *driver = &ehci_cns21xx_hc_driver;
-	int retval = 0;
-	
 	if (usb_disabled())
 		return -ENODEV;
 
-	/* CNS21xx USB20 Register Init */
-	__raw_writel(0x106, SYSVA_USB20_CONFIG_BASE_ADDR + 0x04);
-	__raw_writel((3 << 5) | 0x20000, SYSVA_USB20_OPERATION_BASE_ADDR + 0x40);
-	mdelay(100);
-
-	hcd = usb_create_hcd(driver, &pdev->dev, dev_name(&pdev->dev));
-	if (!hcd) { 
-		retval = -ENOMEM;
-		return retval;
-	}
-
-	hcd->regs = (unsigned int *)SYSVA_USB20_OPERATION_BASE_ADDR;
-	hcd->rsrc_start = SYSPA_USB20_OPERATION_BASE_ADDR;
-	hcd->rsrc_len = 4096;
-	hcd->driver = driver;
-	retval = usb_add_hcd(hcd, IRQ_USB20, IRQF_SHARED);
-	if (retval == 0) {
-		return retval;
-	}
-	printk("str8100 ehci init fail, %d\n", retval);
-	usb_put_hcd(hcd);
-	return retval;
+	return usb_cns21xx_probe(&ehci_cns21xx_hc_driver, pdev);
 }
 
-static int ehci_cns21xx_remove(struct platform_device *pdev)
+static int __devexit ehci_cns21xx_remove(struct platform_device *pdev)
 {
 	struct usb_hcd *hcd = platform_get_drvdata(pdev);
 	usb_remove_hcd(hcd);
@@ -134,13 +167,16 @@ static int ehci_cns21xx_remove(struct platform_device *pdev)
 	return 0;
 }
 
-MODULE_ALIAS("platform:cns21xx-ehci");
-
 static struct platform_driver ehci_cns21xx_driver = {
 	.probe = ehci_cns21xx_probe,
-	.remove = ehci_cns21xx_remove,
+	.remove = __devexit_p(ehci_cns21xx_remove),
 	.driver = {
-		.name = "cns21xx-ehci",
+		.name  = "cns21xx-ehci",
+		.owner = THIS_MODULE,
 	},
 };
+
+MODULE_DESCRIPTION("cns21xx usb ehci driver!");
+MODULE_LICENSE("GPL");
+MODULE_ALIAS("platform:cns21xx-ehci");
 

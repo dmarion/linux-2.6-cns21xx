@@ -29,14 +29,14 @@
 #include <linux/proc_fs.h>
 #include <linux/module.h>
 
-#include <mach/hardware.h>
-#include <mach/cns21xx.h>
-
 #include <asm/io.h>
 #include <asm/irq.h>
 #include <asm/uaccess.h>
 #include <asm/mach/irq.h>
 #include <asm/mach/time.h>
+
+#include <mach/hardware.h>
+#include <mach/cns21xx.h>
 
 u64 volatile cns21xx_counter_tick;
 EXPORT_SYMBOL(cns21xx_counter_tick);
