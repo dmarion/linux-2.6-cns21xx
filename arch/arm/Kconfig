@@ -179,6 +179,11 @@ config ARM_L1_CACHE_SHIFT_6
 	help
 	  Setting ARM L1 cache line size to 64 Bytes.
 
+config ARM_L1_CACHE_SHIFT_4
+	bool
+	help
+	  Setting ARM L1 cache line size to 16 bytes.
+
 config VECTORS_BASE
 	hex
 	default 0xffff0000 if MMU || CPU_HIGH_VECTOR
@@ -285,6 +290,15 @@ config ARCH_BCMRING
 	select ARCH_WANT_OPTIONAL_GPIOLIB
 	help
 	  Support for Broadcom's BCMRing platform.
+
+config ARCH_CNS21XX
+	bool "Cavium Networks CNS21xx family"
+	select CPU_FA526
+	select PLAT_FA
+	select PLAT_FA_TIME
+	select ARM_L1_CACHE_SHIFT_4
+	help
+	  Support for Cavium Networks CNS21xx family.
 
 config ARCH_CLPS711X
 	bool "Cirrus Logic CLPS711x/EP721x-based"
@@ -863,6 +877,8 @@ source "arch/arm/mach-cns3xxx/Kconfig"
 source "arch/arm/mach-davinci/Kconfig"
 
 source "arch/arm/mach-dove/Kconfig"
+
+source "arch/arm/mach-cns21xx/Kconfig"
 
 source "arch/arm/mach-ep93xx/Kconfig"
 

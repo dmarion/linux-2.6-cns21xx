@@ -1,0 +1,6 @@
+if ARCH_CNS21XX
+
+menu "Cavium Networks CNS21xx based machines"
+endmenu
+
+endif

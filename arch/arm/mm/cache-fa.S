@@ -28,7 +28,7 @@
 /*
  * The total size of the data cache.
  */
-#ifdef CONFIG_ARCH_GEMINI
+#if (defined(CONFIG_ARCH_GEMINI) || defined(CONFIG_ARCH_CNS21XX))
 #define CACHE_DSIZE	8192
 #else
 #define CACHE_DSIZE	16384 
