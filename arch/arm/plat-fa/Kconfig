@@ -1,3 +1,6 @@
 if PLAT_FA
 
+config PLAT_FA_TIME
+	def_bool n
+
 endif
