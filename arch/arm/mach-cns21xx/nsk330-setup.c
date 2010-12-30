@@ -68,7 +68,9 @@ static struct uart_port cns21xx_serial_ports[] = {
 		.line		= 0,
 		.type		= PORT_16550A,
 		.fifosize	= 16
-	} , {
+	} ,
+//#if 0 
+	{
 		.membase	= (void *)(SYSVA_UART1_BASE_ADDR),
 		.mapbase	= (SYSPA_UART1_BASE_ADDR),
 		.irq		= IRQ_UART1,
@@ -80,6 +82,73 @@ static struct uart_port cns21xx_serial_ports[] = {
 		.type		= PORT_16550A,
 		.fifosize	= 16
 	}
+//#endif
+};
+
+/*
+ * Serial Ports 
+ */
+
+static struct resource cns21xx_uart_resources[] = {
+//#if 0
+	{
+		.start	= SYSPA_UART0_BASE_ADDR,
+		.end	= SYSPA_UART0_BASE_ADDR + 0xff,
+		.flags	= IORESOURCE_MEM,
+	},
+//#endif
+#if 0
+	{
+		.start	= IRQ_UART0,
+		.end	= IRQ_UART0,
+		.flags	= IORESOURCE_IRQ
+	},
+#endif	
+	{
+		.start	= SYSPA_UART1_BASE_ADDR,
+		.end	= SYSPA_UART1_BASE_ADDR + 0xff,
+		.flags	= IORESOURCE_MEM,
+	},
+#if 0
+	{
+		.start	= IRQ_UART1,
+		.end	= IRQ_UART1,
+		.flags	= IORESOURCE_IRQ
+	},
+#endif
+};
+
+static struct plat_serial8250_port cns21xx_uart_data[] = {
+//#if 0
+	{
+		.membase	= (char*)(SYSVA_UART0_BASE_ADDR),
+		.mapbase	= (SYSPA_UART0_BASE_ADDR),
+		.irq		= IRQ_UART0,
+		.uartclk	= STR21XX_UART_XTAL,
+		.regshift	= 2,
+		.iotype		= UPIO_MEM,
+		.type		= PORT_16550A,
+		.flags		= UPF_SKIP_TEST | UPF_FIXED_TYPE | UPF_NO_TXEN_TEST,
+	},
+//#endif
+	{
+		.membase	= (char*)(SYSVA_UART1_BASE_ADDR),
+		.mapbase	= (SYSPA_UART1_BASE_ADDR),
+		.irq		= IRQ_UART1,
+		.uartclk	= STR21XX_UART_XTAL,
+		.regshift	= 2,
+		.iotype		= UPIO_MEM,
+		.flags		= UPF_SKIP_TEST | UPF_FIXED_TYPE | UPF_NO_TXEN_TEST,
+	},
+	{}
+};
+
+static struct platform_device cns21xx_uart_device = {
+	.name = "serial8250",
+	.id = PLAT8250_DEV_PLATFORM,
+	.dev.platform_data = cns21xx_uart_data,
+//	.resource = cns21xx_uart_resources,
+//	.num_resources = 2 //ARRAY_SIZE(cns21xx_uart_resources),
 };
 
 /*
@@ -219,6 +288,7 @@ static struct spi_board_info nsk330_spi_board_info[] = {
 };
 
 static struct platform_device *cns21xx_devices[] __initdata = {
+	&cns21xx_uart_device,
 	&cns21xx_usb11_device,
 	&cns21xx_usb20_device,
 	&cns21xx_spi_device
@@ -240,7 +310,6 @@ extern unsigned long __ispad_begin;
 
 void __init cns21xx_init(void)
 {
-	//platform_add_devices(device, size);
 	platform_add_devices(cns21xx_devices, ARRAY_SIZE(cns21xx_devices));
 	spi_register_board_info(nsk330_spi_board_info, ARRAY_SIZE(nsk330_spi_board_info));
 }
@@ -248,8 +317,6 @@ void __init cns21xx_init(void)
 void __init nsk330_map_io(void)
 {
 	cns21xx_map_io();
-	early_serial_setup(&cns21xx_serial_ports[0]);
-	early_serial_setup(&cns21xx_serial_ports[1]);
 }
 
 MACHINE_START(NSK330, "NS-K330 NAS (CNS2132)")
