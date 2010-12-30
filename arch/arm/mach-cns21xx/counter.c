@@ -194,7 +194,7 @@ err_out:
 int __init cns21xx_counter_setup(void)
 {
 	cns21xx_setup_counter();
-	setup_irq(INTC_TIMER2_BIT_INDEX, &cns21xx_counter_irq);
+	setup_irq(IRQ_TIMER2, &cns21xx_counter_irq);
 	cns21xx_counter_enable();
 	cns21xx_counter_proc_entry = create_proc_entry("cns21xx/counter", S_IFREG | S_IRUGO, NULL);
 	if (cns21xx_counter_proc_entry) {

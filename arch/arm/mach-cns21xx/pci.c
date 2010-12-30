@@ -42,7 +42,7 @@
 static struct pci_dev *pci_bridge = NULL;
 static u32 pci_config_addr;				// PCI configuration register address port
 static u32 pci_config_data;				// PCI configuration register data port
-u32 cns21xx_pci_irqs[4] = {0, INTC_PCI_INTA_BIT_INDEX, INTC_PCI_INTB_BIT_INDEX, 0};
+u32 cns21xx_pci_irqs[4] = {0, IRQ_PCI_EXT0, IRQ_PCI_EXT1, 0};
 
 static int cns21xx_pci_read_config(struct pci_bus *bus,
 	unsigned int devfn, int where, int size, u32 *val)
@@ -196,11 +196,11 @@ static irqreturn_t PCI_AHB2PCIB_ISR(int irq, void *dev_id, struct pt_regs * regs
 {
 	u32 status;
 
-	//disable_irq(INTC_PCI_AHB2BRIDGE_BIT_INDEX);
+	//disable_irq(IRQ_HOST_BRIDGE);
 	pci_read_config_dword(pci_bridge, PCI_COMMAND, &status);
 	printk("AHB to bridge interrupt status: 0x%x\n", status);
 	pci_write_config_dword(pci_bridge, PCI_COMMAND, status);
-	//enable_irq(INTC_PCI_AHB2BRIDGE_BIT_INDEX);
+	//enable_irq(IRQ_HOST_BRIDGE);
 
 	return IRQ_HANDLED;
 }
@@ -263,14 +263,14 @@ void __init cns21xx_pci_postinit(void)
 	}
 
 	/* scott.patch 
-	request_irq(INTC_PCI_AHB2BRIDGE_BIT_INDEX, PCI_AHB2PCIB_ISR, SA_INTERRUPT, "pci bridge", pci_bridge);
+	request_irq(IRQ_HOST_BRIDGE, PCI_AHB2PCIB_ISR, SA_INTERRUPT, "pci bridge", pci_bridge);
 	*/
-	request_irq(INTC_PCI_AHB2BRIDGE_BIT_INDEX, PCI_AHB2PCIB_ISR, IRQF_DISABLED, "pci bridge", pci_bridge);
+	request_irq(IRQ_HOST_BRIDGE, PCI_AHB2PCIB_ISR, IRQF_DISABLED, "pci bridge", pci_bridge);
 
 	MISC_PCI_CONTROL_BROKEN_MASK_REG &= ~0x1f;
 
 	/* scott.patch */
-	request_irq(INTC_PCI_BROKEN_BIT_INDEX, PCI_BROKEN_ISR, IRQF_DISABLED, "pci broken", pci_bridge);
+	request_irq(IRQ_PCI_BROKEN, PCI_BROKEN_ISR, IRQF_DISABLED, "pci broken", pci_bridge);
 
 	//albert :20040803
 	pci_write_config_dword(pci_bridge, PCI_BASE_ADDRESS_0, 0x0); // = 0x0, can NOT use 0x20000000

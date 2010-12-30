@@ -28,13 +28,15 @@
 #include <linux/timex.h>
 
 #include <mach/hardware.h>
-#include <mach/cns21xx.h>
 
 #include <asm/io.h>
 #include <asm/irq.h>
 #include <asm/uaccess.h>
 #include <asm/mach/irq.h>
 #include <asm/mach/time.h>
+#include <asm/mach/map.h>
+
+#include <mach/cns21xx.h>
 
 #if 1
 // for timer clock < 100MHz
@@ -244,7 +246,7 @@ static void __init cns21xx_timer_init(void)
 	/*
 	 * Make irqs happen for the system timer
 	 */
-	setup_irq(INTC_TIMER1_BIT_INDEX, &cns21xx_timer_irq);
+	setup_irq(IRQ_TIMER1, &cns21xx_timer_irq);
 
 	cns21xx_timer_enable();
 }

@@ -177,5 +177,5 @@ static struct map_desc cns21xx_std_desc[] __initdata = {
 void __init cns21xx_map_io(void)
 {
 	iotable_init(cns21xx_std_desc, ARRAY_SIZE(cns21xx_std_desc));
-	cns21xx_register_map_desc(cns21xx_std_desc, ARRAY_SIZE(cns21xx_std_desc));
+	//cns21xx_register_map_desc(cns21xx_std_desc, ARRAY_SIZE(cns21xx_std_desc));
 }

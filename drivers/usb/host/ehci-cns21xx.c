@@ -117,7 +117,7 @@ static int __devinit ehci_cns21xx_probe(struct platform_device *pdev)
 	hcd->rsrc_start = SYSPA_USB20_OPERATION_BASE_ADDR;
 	hcd->rsrc_len = 4096;
 	hcd->driver = driver;
-	retval = usb_add_hcd(hcd, INTC_USB20_BIT_INDEX, IRQF_SHARED);
+	retval = usb_add_hcd(hcd, IRQ_USB20, IRQF_SHARED);
 	if (retval == 0) {
 		return retval;
 	}

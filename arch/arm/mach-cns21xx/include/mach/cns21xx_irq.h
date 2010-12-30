@@ -121,6 +121,7 @@
 /*
  * define constants macros
  */
+#if 0
 #define	INTC_TIMER1_BIT_INDEX			(0)
 #define	INTC_TIMER2_BIT_INDEX			(1)
 
@@ -169,6 +170,7 @@
 #define	INTC_EXT_INT29_BIT_INDEX		(29)
 #define	INTC_EXT_INT30_BIT_INDEX		(30)
 #define	INTC_HSDMAC_BIT_INDEX			(31)
+#endif
 
 
 /*

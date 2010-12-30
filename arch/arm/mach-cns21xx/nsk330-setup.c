@@ -43,6 +43,11 @@
 #include <asm/mach-types.h>
 #include <asm/mach/arch.h>
 
+#include <linux/spi/spi.h>
+#include <linux/spi/flash.h>
+#include <linux/mtd/mtd.h>
+#include <linux/mtd/partitions.h>
+
 #include <mach/cns21xx.h>
 
 #if 1 // on ASIC
@@ -51,15 +56,11 @@
 #define STR21XX_UART_XTAL 13000000
 #endif
 
-#define EARLY_REGISTER_CONSOLE
-#define DEVICE_REGISTER_MULTIPLE
-
-#ifdef EARLY_REGISTER_CONSOLE
 static struct uart_port cns21xx_serial_ports[] = {
 	{
 		.membase	= (void *)(SYSVA_UART0_BASE_ADDR),
 		.mapbase	= (SYSPA_UART0_BASE_ADDR),
-		.irq		= INTC_UART0_BIT_INDEX,
+		.irq		= IRQ_UART0,
 		.flags		= UPF_BOOT_AUTOCONF | UPF_SKIP_TEST | UPF_FIXED_TYPE,
 		.iotype		= UPIO_MEM,
 		.regshift	= 2,
@@ -70,7 +71,7 @@ static struct uart_port cns21xx_serial_ports[] = {
 	} , {
 		.membase	= (void *)(SYSVA_UART1_BASE_ADDR),
 		.mapbase	= (SYSPA_UART1_BASE_ADDR),
-		.irq		= INTC_UART1_BIT_INDEX,
+		.irq		= IRQ_UART1,
 		.flags		= UPF_BOOT_AUTOCONF | UPF_SKIP_TEST | UPF_FIXED_TYPE,
 		.iotype		= UPIO_MEM,
 		.regshift	= 2,
@@ -80,78 +81,13 @@ static struct uart_port cns21xx_serial_ports[] = {
 		.fifosize	= 16
 	}
 };
-#else
-static struct resource cns21xx_uart0_resources[] = {
-	[0] = {
-		.start	= SYSPA_UART0_BASE_ADDR,
-		.end	= SYSPA_UART0_BASE_ADDR + 0xff,
-		.flags	= IORESOURCE_MEM,
-	},
-	[1] = {
-		.start	= INTC_UART0_BIT_INDEX,
-		.end	= INTC_UART0_BIT_INDEX,
-		.flags	= IORESOURCE_IRQ
-	}
-};
 
-static struct resource cns21xx_uart1_resources[] = {
-	[0] = {
-		.start	= SYSPA_UART1_BASE_ADDR,
-		.end	= SYSPA_UART1_BASE_ADDR + 0xff,
-		.flags	= IORESOURCE_MEM,
-	},
-	[1] = {
-		.start	= INTC_UART1_BIT_INDEX,
-		.end	= INTC_UART1_BIT_INDEX,
-		.flags	= IORESOURCE_IRQ
-	}
-};
+/*
+ * OHCI 
+ */
 
-static struct plat_serial8250_port cns21xx_uart0_data[] = {
-	{
-		.membase	= (char*)(SYSVA_UART0_BASE_ADDR),
-		.mapbase	= (SYSPA_UART0_BASE_ADDR),
-		.irq		= INTC_UART0_BIT_INDEX,
-		.uartclk	= STR21XX_UART_XTAL,
-		.regshift	= 2,
-		.iotype		= UPIO_MEM,
-		.flags		= UPF_BOOT_AUTOCONF | UPF_SKIP_TEST,
-	},
-	{  },
-};
+static u64 cns21xx_usb_ohci_dmamask = 0xffffffffUL;
 
-static struct plat_serial8250_port cns21xx_uart1_data[] = {
-	{
-		.membase	= (char*)(SYSVA_UART1_BASE_ADDR),
-		.mapbase	= (SYSPA_UART1_BASE_ADDR),
-		.irq		= INTC_UART1_BIT_INDEX,
-		.uartclk	= STR21XX_UART_XTAL,
-		.regshift	= 2,
-		.iotype		= UPIO_MEM,
-		.flags		= UPF_BOOT_AUTOCONF | UPF_SKIP_TEST,
-	},
-	{  },
-};
-
-static struct platform_device cns21xx_uart0_device = {
-	.name = "serial8250",
-	.id = 0,
-	.dev.platform_data = cns21xx_uart0_data,
-	.num_resources = 2,
-	.resource = cns21xx_uart0_resources,
-};
-
-static struct platform_device cns21xx_uart1_device = {
-	.name = "serial8250",
-	.id = 1,
-	.dev.platform_data = cns21xx_uart1_data,
-	.num_resources = 2,
-	.resource = cns21xx_uart1_resources,
-};
-#endif
-
-
-static u64 usb_dmamask = 0xffffffffULL;
 static struct resource cns21xx_usb11_resources[] = {
 	[0] = {
 		.start	= SYSPA_USB11_CONFIG_BASE_ADDR,
@@ -159,8 +95,8 @@ static struct resource cns21xx_usb11_resources[] = {
 		.flags	= IORESOURCE_MEM,
 	},
 	[1] = {
-		.start	= INTC_USB11_BIT_INDEX,
-		.end	= INTC_USB11_BIT_INDEX,
+		.start	= IRQ_USB11,
+		.end	= IRQ_USB11,
 		.flags	= IORESOURCE_IRQ,
 	},
 };
@@ -169,12 +105,18 @@ static struct platform_device cns21xx_usb11_device = {
 	.name		= "cns21xx-ohci",
 	.id		= -1,
 	.dev = {
-		.dma_mask		= &usb_dmamask,
-		.coherent_dma_mask	= 0xffffffff,
+		.dma_mask		= &cns21xx_usb_ohci_dmamask,
+		.coherent_dma_mask	= 0xffffffffUL,
 	},
 	.resource	= cns21xx_usb11_resources,
 	.num_resources	= ARRAY_SIZE(cns21xx_usb11_resources),
 };
+
+/*
+ * EHCI 
+ */
+
+static u64 cns21xx_usb_ehci_dmamask = 0xffffffffUL;
 
 static struct resource cns21xx_usb20_resources[] = {
 	[0] = {
@@ -183,8 +125,8 @@ static struct resource cns21xx_usb20_resources[] = {
 		.flags	= IORESOURCE_MEM,
 	},
 	[1] = {
-		.start	= INTC_USB20_BIT_INDEX,
-		.end	= INTC_USB20_BIT_INDEX,
+		.start	= IRQ_USB20,
+		.end	= IRQ_USB20,
 		.flags	= IORESOURCE_IRQ,
 	},
 };
@@ -193,34 +135,102 @@ static struct platform_device cns21xx_usb20_device = {
 	.name		= "cns21xx-ehci",
 	.id		= -1,
 	.dev		= {
-		.dma_mask		= &usb_dmamask,
-		.coherent_dma_mask	= 0xffffffff,
+		.dma_mask		= &cns21xx_usb_ehci_dmamask,
+		.coherent_dma_mask	= 0xffffffffUL,
 	},
 	.resource	= cns21xx_usb20_resources,
 	.num_resources	= ARRAY_SIZE(cns21xx_usb20_resources),
 };
 
-#ifdef DEVICE_REGISTER_MULTIPLE
-static struct platform_device *cns21xx_devices[] __initdata = {
-#ifndef EARLY_REGISTER_CONSOLE
-	&cns21xx_uart0_device,
-	&cns21xx_uart1_device,
-#endif
-	&cns21xx_usb11_device,
-	&cns21xx_usb20_device
+/*
+ * SPI
+ */
+
+static u64 cns21xx_usb_spi_dmamask = 0xffffffffUL;
+
+static struct resource cns21xx_spi_resources[] = {
+	[0] = {
+		.start	= SYSPA_SPI_BASE_ADDR,
+		.end	= SYSPA_SPI_BASE_ADDR + SZ_4K - 1,
+		.flags	= IORESOURCE_MEM,
+	},
+	[1] = {
+		.start	= IRQ_SPI,
+		.end	= IRQ_SPI,
+		.flags	= IORESOURCE_IRQ,
+	},
 };
-#endif
+
+static struct platform_device cns21xx_spi_device = {
+	.name		= "cns21xx-spi",
+	.id		= -1,
+	.dev		= {
+		.dma_mask		= &cns21xx_usb_spi_dmamask,
+		.coherent_dma_mask	= 0xffffffffUL,
+	},
+	.resource	= cns21xx_spi_resources,
+	.num_resources	= ARRAY_SIZE(cns21xx_spi_resources),
+};
+
+/*
+ *  SPI MTD Flash
+ */
+
+static struct mtd_partition nsk330_spi_flash_partitions[] = {
+	{
+		.name =		"BOOT",
+		.offset =	0x00000000,
+		.size =		256 * SZ_1K,
+	},{
+		.name =		"CFG",
+		.offset =	0x00040000,
+		.size =		128 * SZ_1K,
+	},{
+		.name =		"KERNEL",
+		.offset =	0x00060000,
+		.size =		960 * SZ_1K,
+	},{
+		.name =		"INITRD",
+		.offset =	0x00150000,
+		.size =		2688 * SZ_1K,
+	},{
+		.name =		"ALL",
+		.offset =	0x00000000,
+		.size =		4032 * SZ_1K,
+	}
+};
+
+
+static struct flash_platform_data nsk330_spi_flash_data = {
+	.name = "m25p80",
+	.parts = nsk330_spi_flash_partitions,
+	.nr_parts = ARRAY_SIZE(nsk330_spi_flash_partitions),
+	.type = "m25p32",
+};
+
+static struct spi_board_info nsk330_spi_board_info[] = {
+        {
+		.modalias	= "m25p80",
+		.chip_select	= 0,
+		.max_speed_hz	= 25 * 1000 * 1000,
+		.bus_num	= 1,
+		.platform_data = &nsk330_spi_flash_data,
+        },
+};
+
+static struct platform_device *cns21xx_devices[] __initdata = {
+	&cns21xx_usb11_device,
+	&cns21xx_usb20_device,
+	&cns21xx_spi_device
+};
 
 static void __init cns21xx_fixup(struct machine_desc *desc,
 	struct tag *tags, char **cmdline, struct meminfo *mi)
 {
-	printk("DAMJAN: cns21xx_fixup start\n");
         mi->nr_banks = 1;
 	mi->bank[0].start = CONFIG_SYSTEM_DRAM_BASE;
 	mi->bank[0].size = CONFIG_SYSTEM_DRAM_SIZE << 20;
 	mi->bank[0].highmem = 0;
-	//
-	printk("DAMJAN: cns21xx_fixup start\n");
 }
 
 /* ######################################################################### */
@@ -230,29 +240,16 @@ extern unsigned long __ispad_begin;
 
 void __init cns21xx_init(void)
 {
-	printk("DAMJAN: cns21xx_init start\n");
-#ifdef DEVICE_REGISTER_MULTIPLE
+	//platform_add_devices(device, size);
 	platform_add_devices(cns21xx_devices, ARRAY_SIZE(cns21xx_devices));
-#else // DEVICE_REGISTER_MULTIPLE
-#ifndef EARLY_REGISTER_CONSOLE
-	platform_device_register(&cns21xx_uart0_device);
-	platform_device_register(&cns21xx_uart1_device);
-#endif
-	platform_device_register(&cns21xx_usb11_device);
-	platform_device_register(&cns21xx_usb20_device);
-#endif
-	printk("DAMJAN: cns21xx_init end\n");
+	spi_register_board_info(nsk330_spi_board_info, ARRAY_SIZE(nsk330_spi_board_info));
 }
 
 void __init nsk330_map_io(void)
 {
-	printk("DAMJAN: nsk330_map_io start\n");
 	cns21xx_map_io();
-#ifdef EARLY_REGISTER_CONSOLE
 	early_serial_setup(&cns21xx_serial_ports[0]);
 	early_serial_setup(&cns21xx_serial_ports[1]);
-#endif
-	printk("DAMJAN: nsk330_map_io end \n");
 }
 
 MACHINE_START(NSK330, "NS-K330 NAS (CNS2132)")

@@ -8,7 +8,7 @@
 #demo_i2s-objs := demo_i2s_config.o
 #demo_i2s_wm8772-objs := demo_i2s_wm8772_config.o
 
-obj-y			:= timer.o irq.o misc.o counter.o pm.o mm.o
+obj-y			:= timer.o irq.o counter.o pm.o mm.o
 obj-m			:=
 obj-n			:=
 obj-			:=

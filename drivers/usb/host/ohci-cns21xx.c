@@ -95,7 +95,7 @@ static int ohci_cns21xx_probe(struct platform_device *pdev)
 	hcd->rsrc_len = 4096;
 	ohci = hcd_to_ohci(hcd);
 	ohci_hcd_init(ohci);
-	retval = usb_add_hcd(hcd, INTC_USB11_BIT_INDEX, IRQF_SHARED);
+	retval = usb_add_hcd(hcd, IRQ_USB11, IRQF_SHARED);
 	if (retval == 0) {
 		return retval;
 	}

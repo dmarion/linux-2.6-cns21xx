@@ -25,6 +25,7 @@
 #ifndef __MACH_CNS21XX_H__
 #define __MACH_CNS21XX_H__
 
+
 /*
  *  Functions
  */
@@ -111,11 +112,49 @@ extern void cns21xx_early_init(void);
 #define SYSVA_USB20_DEVICE_BASE_ADDR		0xFFF1A000
 #define SYSVA_VIC_BASE_ADDR			0xFFF1B000
 
+/*
+ *  IRQ Mapping
+ */
+#define	IRQ_TIMER1				0
+#define	IRQ_TIMER2				1
+#define	IRQ_FREQ_SCALING			2
+#define IRQ_WATCHDOG				3
+#define IRQ_GPIO				4
+#define IRQ_PCI_EXT0				5
+#define IRQ_PCI_EXT1				6
+#define IRQ_PCI_BROKEN				7
+#define IRQ_HOST_BRIDGE				8
+#define IRQ_UART0				9
+#define IRQ_UART1				10
+#define IRQ_DMA_TERM_COUNT			11
+#define IRQ_DMA_ERR				12
+// 13 reserved
+#define IRQ_RTC					14
+#define IRQ_PCM_CTRL				15
+#define IRQ_IDE_HOST_CTRL			16
+#define IRQ_IDE_DEVICE				17
+#define IRQ_NIC_CTRL				18
+#define IRQ_NIC_DMA_TNTC			19
+#define IRQ_NIC_DMA_FNRC			20
+#define IRQ_NIC_DMA_TNQE			21
+#define IRQ_NIC_DMA_FNQF			22
+#define IRQ_USB11				23
+#define IRQ_USB20				24
+#define IRQ_I2S					25
+#define IRQ_SPI					26
+#define IRQ_TWI					27
+#define IRQ_VBUS_STATE_CHG			28
+#define IRQ_EXT_INT29				29
+#define IRQ_EXT_INT30				30
+#define IRQ_HSDMA				31
+
+
 #include <mach/cns21xx_irq.h>
 #include <mach/cns21xx_misc.h>
 #include <mach/cns21xx_pci.h>
 #include <mach/cns21xx_pm.h>
 #include <mach/cns21xx_timer.h>
 #include <mach/cns21xx_uart.h>
+#include <mach/cns21xx_spi.h>
 
 #endif /* __MACH_CNS21XX_H__ */
