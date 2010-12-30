@@ -12,6 +12,7 @@
 
 void __init cns21xx_map_io(void);
 void __init cns21xx_init_irq(void);
+void __init cns21xx_gpio_init(void);
 
 extern struct sys_timer cns21xx_timer;
 

@@ -296,6 +296,8 @@ config ARCH_CNS21XX
 	select CPU_FA526
 	select PLAT_FA
 	select PLAT_FA_TIME
+	select PLAT_FA_GPIO
+	select ARCH_REQUIRE_GPIOLIB
 	select ARM_L1_CACHE_SHIFT_4
 	help
 	  Support for Cavium Networks CNS21xx family.
