@@ -7,6 +7,7 @@
 obj-y		:= core.o devices.o gpio.o irq.o mm.o time.o
 
 # devices
+obj-$(CONFIG_CNS21XX_DEV_GEC)		+= dev-gec.o
 obj-$(CONFIG_CNS21XX_DEV_USB)		+= dev-usb.o
 obj-$(CONFIG_CNS21XX_DEV_SPI_MASTER)	+= dev-spi-master.o
 

@@ -3,6 +3,9 @@ if ARCH_CNS21XX
 menu "Cavium Networks CNS21xx based machines"
 endmenu
 
+config CNS21XX_DEV_GEC
+	def_bool n
+
 config CNS21XX_DEV_USB
 	def_bool n
 
