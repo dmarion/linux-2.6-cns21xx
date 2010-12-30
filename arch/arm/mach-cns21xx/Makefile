@@ -4,7 +4,7 @@
 
 # Object file lists.
 
-obj-y		:= core.o irq.o mm.o time.o
+obj-y		:= core.o devices.o irq.o mm.o time.o
 
 # machine specific files
 
