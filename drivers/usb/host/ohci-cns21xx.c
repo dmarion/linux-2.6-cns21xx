@@ -80,8 +80,8 @@ static int ohci_cns21xx_probe(struct platform_device *pdev)
 		return -ENODEV;
 
 	/* CNS21xx USB11 Config Register Init */
-	__raw_writel(0x146, SYSVA_USB11_CONFIG_BASE_ADDR + 0x04);
-	__raw_writel(0x200, SYSVA_USB11_CONFIG_BASE_ADDR + 0x44);
+	__raw_writel(0x146, CNS21XX_USB11_CONFIG_BASE_VIRT + 0x04);
+	__raw_writel(0x200, CNS21XX_USB11_CONFIG_BASE_VIRT + 0x44);
 	mdelay(100);
 		
 	hcd = usb_create_hcd(driver, &pdev->dev, dev_name(&pdev->dev));
@@ -90,12 +90,12 @@ static int ohci_cns21xx_probe(struct platform_device *pdev)
 		retval = -ENOMEM;
 		return retval;
 	}
-	hcd->regs = (unsigned int *)SYSVA_USB11_OPERATION_BASE_ADDR;
-	hcd->rsrc_start = SYSPA_USB11_OPERATION_BASE_ADDR;
+	hcd->regs = (unsigned int *)CNS21XX_USB11_OPERATION_BASE_VIRT;
+	hcd->rsrc_start = CNS21XX_USB11_OPERATION_BASE;
 	hcd->rsrc_len = 4096;
 	ohci = hcd_to_ohci(hcd);
 	ohci_hcd_init(ohci);
-	retval = usb_add_hcd(hcd, IRQ_USB11, IRQF_SHARED);
+	retval = usb_add_hcd(hcd, CNS21XX_IRQ_USB11, IRQF_SHARED);
 	if (retval == 0) {
 		return retval;
 	}

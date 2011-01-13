@@ -28,7 +28,7 @@
 #include <mach/hardware.h>
 
 
-#define SPI_MEM_MAP_VALUE(reg_offset)		(*((u32 volatile *)(SYSVA_SPI_BASE_ADDR + reg_offset)))
+#define SPI_MEM_MAP_VALUE(reg_offset)		(*((u32 volatile *)(CNS21XX_SPI_BASE_VIRT + reg_offset)))
 
 /*
  * define access macros

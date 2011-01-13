@@ -32,10 +32,10 @@ static int ehci_cns21xx_reinit(struct ehci_hcd *ehci)
 {
 	
 	/* Enable EHCI */ 
-	__raw_writel(0x106, SYSVA_USB20_CONFIG_BASE_ADDR + 0x04);
+	__raw_writel(0x106, CNS21XX_USB20_CONFIG_BASE_VIRT + 0x04);
 
 	/* Set FIFO buffer to 512, bit 17 not docummented */ 
-	__raw_writel((3 << 5)  | 0x20000, SYSVA_USB20_CONFIG_BASE_ADDR + 0x40);
+	__raw_writel((3 << 5)  | 0x20000, CNS21XX_USB20_CONFIG_BASE_VIRT + 0x40);
 
 	mdelay(100);
 	ehci_port_power(ehci, 0);
@@ -92,8 +92,8 @@ static int __devinit usb_cns21xx_probe(const struct hc_driver *driver,
 	int irq;
 
 	/* CNS21xx USB20 Register Init */
-	__raw_writel(0x106, SYSVA_USB20_CONFIG_BASE_ADDR + 0x04);
-	__raw_writel((3 << 5) | 0x20000, SYSVA_USB20_OPERATION_BASE_ADDR + 0x40);
+	__raw_writel(0x106, CNS21XX_USB20_CONFIG_BASE_VIRT + 0x04);
+	__raw_writel((3 << 5) | 0x20000, CNS21XX_USB20_OPERATION_BASE_VIRT + 0x40);
 	mdelay(100);
 
 	hcd = usb_create_hcd(driver, &pdev->dev, dev_name(&pdev->dev));
@@ -102,8 +102,8 @@ static int __devinit usb_cns21xx_probe(const struct hc_driver *driver,
 		goto err1;
 	}
 
-	hcd->regs = (unsigned int *)SYSVA_USB20_OPERATION_BASE_ADDR;
-	hcd->rsrc_start = SYSPA_USB20_OPERATION_BASE_ADDR;
+	hcd->regs = (unsigned int *)CNS21XX_USB20_OPERATION_BASE_VIRT;
+	hcd->rsrc_start = CNS21XX_USB20_OPERATION_BASE;
 	hcd->rsrc_len = 4096;
 	hcd->driver = driver;
 

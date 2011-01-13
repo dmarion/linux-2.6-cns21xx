@@ -63,8 +63,6 @@ struct cns21xx_spi {
 	struct spi_board_info	board_info[4];
 };
 
-extern u32 APB_clock;
-
 static inline u8 cns21xx_spi_bus_idle(void)
 {
 	return ((SPI_SERVICE_STATUS_REG & 0x1) ? 0 : 1);
@@ -145,11 +143,11 @@ static void cns21xx_spi_chipselect(struct spi_device *spi, int value)
 		SPI_TRANSMIT_CONTROL_REG |= (spi->chip_select & 0x3);
 
 		for (i = 0; i < 8; i++) {
-			if (spi->max_speed_hz > (APB_clock >> i))
+			if (spi->max_speed_hz > (cns21xx_get_apb_freq() >> i))
 				break;
 		}
 #ifdef CNS21XX_SPI_DEBUG
-		printk("[CNS21XX_SPI_DEBUG] APB_clock:%u\n", APB_clock);
+		printk("[CNS21XX_SPI_DEBUG] APB_clock:%u\n", cns21xx_get_apb_freq());
 		printk("[CNS21XX_SPI_DEBUG] spi->max_speed_hz:%u\n", spi->max_speed_hz);
 		printk("[CNS21XX_SPI_DEBUG] SPI bit rate control val:%d\n", i);
 #endif

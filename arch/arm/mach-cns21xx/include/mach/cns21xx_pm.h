@@ -26,7 +26,7 @@
 
 #include <mach/hardware.h>
 
-#define	PWRMGT_MEM_MAP_VALUE(reg_offset)	(*((u32 volatile *)(SYSVA_POWER_MANAGEMENT_BASE_ADDR + reg_offset)))
+#define	PWRMGT_MEM_MAP_VALUE(reg_offset)	(*((u32 volatile *)(CNS21XX_POWER_MANAGEMENT_BASE_VIRT + reg_offset)))
 
 /*
  * define access macros

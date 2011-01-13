@@ -296,9 +296,14 @@ config ARCH_CLPS711X
 config ARCH_CNS21XX
 	bool "Cavium ECONA CNS21xx"
 	select CPU_FA526
-	select ARCH_USES_GETTIMEOFFSET
+	select PLAT_FA
+	select PLAT_FA_TIME
+	select PLAT_FA_GPIO
+	select ARCH_REQUIRE_GPIOLIB
+	select USB_ARCH_HAS_OHCI
+	select USB_ARCH_HAS_EHCI
 	help
-	  Support for Cavium Networks ECONA CNS21XX platform (ex STAR STR81XX)
+	  Support for Cavium Networks ECONA CNS21XX family (ex STAR STR81XX).
 
 config ARCH_CNS3XXX
 	bool "Cavium Networks CNS3XXX family"

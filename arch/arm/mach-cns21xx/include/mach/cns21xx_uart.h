@@ -28,8 +28,8 @@
 #include <mach/hardware.h>
 
 
-#define	UART_MEM_MAP_VALUE_PHY(reg_offset)	(*((u32	volatile *)(SYSPA_UART0_BASE_ADDR + reg_offset)))
-#define	UART_MEM_MAP_VALUE_VIR(reg_offset)	(*((u32	volatile *)(SYSVA_UART0_BASE_ADDR + reg_offset)))
+#define	UART_MEM_MAP_VALUE_PHY(reg_offset)	(*((u32	volatile *)(CNS21XX_UART0_BASE + reg_offset)))
+#define	UART_MEM_MAP_VALUE_VIR(reg_offset)	(*((u32	volatile *)(CNS21XX_UART0_BASE_VIRT + reg_offset)))
 
 
 #define	UART1_OFFSET		0x800000  //SYS_UART1_BASE_ADDR	= 0x78800000 = (UART1_OFFSET+ SYS_UART0_BASE_ADDR)

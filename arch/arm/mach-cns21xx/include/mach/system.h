@@ -25,12 +25,13 @@
 #define __ASM_ARCH_SYSTEM_H__
 
 #include <asm/io.h>
+#include <mach/cns21xx.h>
 #include <mach/cns21xx_pm.h>
 
 static inline void arch_idle(void)
 {
-	//volatile u32 dst= (*((u32 volatile *)(SYSVA_FLASH_BASE_ADDR + 0x20000)));
-	__raw_writel(0x0, SYSVA_FLASH_BASE_ADDR + 0x20000);
+	//volatile u32 dst= (*((u32 volatile *)(CNS21XX_FLASH_BASE_VIRT + 0x20000)));
+	__raw_writel(0x0, CNS21XX_FLASH_BASE_VIRT + 0x20000);
 	cpu_do_idle();
 }
 

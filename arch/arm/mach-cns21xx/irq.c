@@ -201,7 +201,7 @@ void __init cns21xx_init_irq(void)
 	INTC_FIQ_SELECT_REG = 0x0;
 #ifdef CONFIG_VIC_INTERRUPT
 	for (i = 0; i < NR_IRQS; i++) {
-		(*((u32 volatile *)(SYSVA_VIC_BASE_ADDR + 0x40 + (i << 2)))) = i;
+		(*((u32 volatile *)(CNS21XX_VIC_BASE_VIRT + 0x40 + (i << 2)))) = i;
 	}
 	INTC_VECTOR_INTERRUPT_ENABLE_REG = 1;
 #else

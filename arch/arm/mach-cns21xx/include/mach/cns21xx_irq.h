@@ -27,7 +27,7 @@
 
 #include <mach/hardware.h>
 
-#define	INTC_MEM_MAP_VALUE(reg_offset)		(*((u32 volatile *)(SYSVA_VIC_BASE_ADDR + reg_offset)))
+#define	INTC_MEM_MAP_VALUE(reg_offset)		(*((u32 volatile *)(CNS21XX_VIC_BASE_VIRT + reg_offset)))
 
 /*
  * define access macros

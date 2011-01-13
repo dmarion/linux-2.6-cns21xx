@@ -32,143 +32,143 @@
 
 static struct map_desc cns21xx_std_desc[] __initdata = {
 	{
-		.virtual	= SYSVA_FLASH_BASE_ADDR,
-		.pfn		= __phys_to_pfn(SYSPA_FLASH_SRAM_BANK0_BASE_ADDR),
+		.virtual	= CNS21XX_FLASH_BASE_VIRT,
+		.pfn		= __phys_to_pfn(CNS21XX_FLASH_SRAM_BANK0_BASE),
 		.length		= SZ_8M,
 		.type		= MT_DEVICE
 	}, 	{
-		.virtual	= SYSVA_IDE_DEVICE_BASE_ADDR,
-		.pfn		= __phys_to_pfn(SYSPA_IDE_DEVICE_BASE_ADDR),
+		.virtual	= CNS21XX_IDE_DEVICE_BASE_VIRT,
+		.pfn		= __phys_to_pfn(CNS21XX_IDE_DEVICE_BASE),
 		.length		= SZ_4K,
 		.type		= MT_DEVICE
 	}, {
-		.virtual	= SYSVA_GDMAC_BASE_ADDR,
-		.pfn		= __phys_to_pfn(SYSPA_GDMAC_BASE_ADDR),
+		.virtual	= CNS21XX_GDMAC_BASE_VIRT,
+		.pfn		= __phys_to_pfn(CNS21XX_GDMAC_BASE),
 		.length		= SZ_4K,
 		.type		= MT_DEVICE
 	}, {
-		.virtual	= SYSVA_NIC_BASE_ADDR,
-		.pfn		= __phys_to_pfn(SYSPA_NIC_BASE_ADDR),
+		.virtual	= CNS21XX_NIC_BASE_VIRT,
+		.pfn		= __phys_to_pfn(CNS21XX_NIC_BASE),
 		.length		= SZ_4K,
 		.type		= MT_DEVICE
 	}, {
-		.virtual	= SYSVA_SPI_BASE_ADDR,
-		.pfn		= __phys_to_pfn(SYSPA_SPI_BASE_ADDR),
+		.virtual	= CNS21XX_SPI_BASE_VIRT,
+		.pfn		= __phys_to_pfn(CNS21XX_SPI_BASE),
 		.length		= SZ_4K,
 		.type		= MT_DEVICE
 	}, {
-		.virtual	= SYSVA_PCM_BASE_ADDR,
-		.pfn		= __phys_to_pfn(SYSPA_PCM_BASE_ADDR),
+		.virtual	= CNS21XX_PCM_BASE_VIRT,
+		.pfn		= __phys_to_pfn(CNS21XX_PCM_BASE),
 		.length		= SZ_4K,
 		.type		= MT_DEVICE
 	}, {
-		.virtual	= SYSVA_I2C_BASE_ADDR,
-		.pfn		= __phys_to_pfn(SYSPA_I2C_BASE_ADDR),
+		.virtual	= CNS21XX_I2C_BASE_VIRT,
+		.pfn		= __phys_to_pfn(CNS21XX_I2C_BASE),
 		.length		= SZ_4K,
 		.type		= MT_DEVICE
 	}, {
-		.virtual	= SYSVA_I2S_BASE_ADDR,
-		.pfn		= __phys_to_pfn(SYSPA_I2S_BASE_ADDR),
+		.virtual	= CNS21XX_I2S_BASE_VIRT,
+		.pfn		= __phys_to_pfn(CNS21XX_I2S_BASE),
 		.length		= SZ_4K,
 		.type		= MT_DEVICE
 	}, {
-		.virtual	= SYSVA_DDRC_SDRC_BASE_ADDR,
-		.pfn		= __phys_to_pfn(SYSPA_DDRC_SDRC_BASE_ADDR),
+		.virtual	= CNS21XX_DDRC_SDRC_BASE_VIRT,
+		.pfn		= __phys_to_pfn(CNS21XX_DDRC_SDRC_BASE),
 		.length		= SZ_4K,
 		.type		= MT_DEVICE
 	}, {
-		.virtual	= SYSVA_SMC_BASE_ADDR,
-		.pfn		= __phys_to_pfn(SYSPA_SMC_BASE_ADDR),
+		.virtual	= CNS21XX_SMC_BASE_VIRT,
+		.pfn		= __phys_to_pfn(CNS21XX_SMC_BASE),
 		.length		= SZ_4K,
 		.type		= MT_DEVICE
 	}, {
-		.virtual	= SYSVA_IDE_CONTROLLER_BASE_ADDR,
-		.pfn		= __phys_to_pfn(SYSPA_IDE_CONTROLLER_BASE_ADDR),
+		.virtual	= CNS21XX_IDE_CONTROLLER_BASE_VIRT,
+		.pfn		= __phys_to_pfn(CNS21XX_IDE_CONTROLLER_BASE),
 		.length		= SZ_4K,
 		.type		= MT_DEVICE
 	}, {
-		.virtual	= SYSVA_MISC_BASE_ADDR,
-		.pfn		= __phys_to_pfn(SYSPA_MISC_BASE_ADDR),
+		.virtual	= CNS21XX_MISC_BASE_VIRT,
+		.pfn		= __phys_to_pfn(CNS21XX_MISC_BASE),
 		.length		= SZ_4K,
 		.type		= MT_DEVICE
 	}, {
-		.virtual	= SYSVA_POWER_MANAGEMENT_BASE_ADDR,
-		.pfn		= __phys_to_pfn(SYSPA_POWER_MANAGEMENT_BASE_ADDR),
+		.virtual	= CNS21XX_POWER_MANAGEMENT_BASE_VIRT,
+		.pfn		= __phys_to_pfn(CNS21XX_POWER_MANAGEMENT_BASE),
 		.length		= SZ_4K,
 		.type		= MT_DEVICE
 	}, {
-		.virtual	= SYSVA_UART0_BASE_ADDR,
-		.pfn		= __phys_to_pfn(SYSPA_UART0_BASE_ADDR),
+		.virtual	= CNS21XX_UART0_BASE_VIRT,
+		.pfn		= __phys_to_pfn(CNS21XX_UART0_BASE),
 		.length		= SZ_4K,
 		.type		= MT_DEVICE
 	}, {
-		.virtual	= SYSVA_UART1_BASE_ADDR,
-		.pfn		= __phys_to_pfn(SYSPA_UART1_BASE_ADDR),
+		.virtual	= CNS21XX_UART1_BASE_VIRT,
+		.pfn		= __phys_to_pfn(CNS21XX_UART1_BASE),
 		.length		= SZ_4K,
 		.type		= MT_DEVICE
 	}, {
-		.virtual	= SYSVA_TIMER_BASE_ADDR,
-		.pfn		= __phys_to_pfn(SYSPA_TIMER_BASE_ADDR),
+		.virtual	= CNS21XX_TIMER_BASE_VIRT,
+		.pfn		= __phys_to_pfn(CNS21XX_TIMER_BASE),
 		.length		= SZ_4K,
 		.type		= MT_DEVICE
 	}, {
-		.virtual	= SYSVA_WATCHDOG_TIMER_BASE_ADDR,
-		.pfn		= __phys_to_pfn(SYSPA_WATCHDOG_TIMER_BASE_ADDR),
+		.virtual	= CNS21XX_WATCHDOG_TIMER_BASE_VIRT,
+		.pfn		= __phys_to_pfn(CNS21XX_WATCHDOG_TIMER_BASE),
 		.length		= SZ_4K,
 		.type		= MT_DEVICE
 	}, {
-		.virtual	= SYSVA_RTC_BASE_ADDR,
-		.pfn		= __phys_to_pfn(SYSPA_RTC_BASE_ADDR),
+		.virtual	= CNS21XX_RTC_BASE_VIRT,
+		.pfn		= __phys_to_pfn(CNS21XX_RTC_BASE),
 		.length		= SZ_4K,
 		.type		= MT_DEVICE
 	}, {
-		.virtual	= SYSVA_GPIOA_BASE_ADDR,
-		.pfn		= __phys_to_pfn(SYSPA_GPIOA_BASE_ADDR),
+		.virtual	= CNS21XX_GPIOA_BASE_VIRT,
+		.pfn		= __phys_to_pfn(CNS21XX_GPIOA_BASE),
 		.length		= SZ_4K,
 		.type		= MT_DEVICE
 	}, {
-		.virtual	= SYSVA_GPIOB_BASE_ADDR,
-		.pfn		= __phys_to_pfn(SYSPA_GPIOB_BASE_ADDR),
+		.virtual	= CNS21XX_GPIOB_BASE_VIRT,
+		.pfn		= __phys_to_pfn(CNS21XX_GPIOB_BASE),
 		.length		= SZ_4K,
 		.type		= MT_DEVICE
 	}, {
-		.virtual	= SYSVA_PCI_BRIDGE_CONFIG_DATA_BASE_ADDR,
-		.pfn		= __phys_to_pfn(SYSPA_PCI_BRIDGE_CONFIG_DATA_BASE_ADDR),
+		.virtual	= CNS21XX_PCI_CONFIG_DATA_BASE_VIRT,
+		.pfn		= __phys_to_pfn(CNS21XX_PCI_CONFIG_DATA_BASE),
 		.length		= SZ_4K,
 		.type		= MT_DEVICE
 	}, {
-		.virtual	= SYSVA_PCI_BRIDGE_CONFIG_ADDR_BASE_ADDR,
-		.pfn		= __phys_to_pfn(SYSPA_PCI_BRIDGE_CONFIG_ADDR_BASE_ADDR),
+		.virtual	= CNS21XX_PCI_CONFIG_ADDR_BASE_VIRT,
+		.pfn		= __phys_to_pfn(CNS21XX_PCI_CONFIG_ADDR_BASE),
 		.length		= SZ_4K,
 		.type		= MT_DEVICE
 	}, {
-		.virtual	= SYSVA_USB11_CONFIG_BASE_ADDR,
-		.pfn		= __phys_to_pfn(SYSPA_USB11_CONFIG_BASE_ADDR),
+		.virtual	= CNS21XX_USB11_CONFIG_BASE_VIRT,
+		.pfn		= __phys_to_pfn(CNS21XX_USB11_CONFIG_BASE),
 		.length		= SZ_4K,
 		.type		= MT_DEVICE
 	}, {
-		.virtual	= SYSVA_USB11_OPERATION_BASE_ADDR,
-		.pfn		= __phys_to_pfn(SYSPA_USB11_OPERATION_BASE_ADDR),
+		.virtual	= CNS21XX_USB11_OPERATION_BASE_VIRT,
+		.pfn		= __phys_to_pfn(CNS21XX_USB11_OPERATION_BASE),
 		.length		= SZ_4K,
 		.type		= MT_DEVICE
 	}, {
-		.virtual	= SYSVA_USB20_CONFIG_BASE_ADDR,
-		.pfn		= __phys_to_pfn(SYSPA_USB20_CONFIG_BASE_ADDR),
+		.virtual	= CNS21XX_USB20_CONFIG_BASE_VIRT,
+		.pfn		= __phys_to_pfn(CNS21XX_USB20_CONFIG_BASE),
 		.length		= SZ_4K,
 		.type		= MT_DEVICE
 	}, {
-		.virtual	= SYSVA_USB20_OPERATION_BASE_ADDR,
-		.pfn		= __phys_to_pfn(SYSPA_USB20_OPERATION_BASE_ADDR),
+		.virtual	= CNS21XX_USB20_OPERATION_BASE_VIRT,
+		.pfn		= __phys_to_pfn(CNS21XX_USB20_OPERATION_BASE),
 		.length		= SZ_4K,
 		.type		= MT_DEVICE
 	}, {
-		.virtual	= SYSVA_USB20_DEVICE_BASE_ADDR,
-		.pfn		= __phys_to_pfn(SYSPA_USB20_DEVICE_BASE_ADDR),
+		.virtual	= CNS21XX_USB20_DEVICE_BASE_VIRT,
+		.pfn		= __phys_to_pfn(CNS21XX_USB20_DEVICE_BASE),
 		.length		= SZ_4K,
 		.type		= MT_DEVICE
 	}, {
-		.virtual	= SYSVA_VIC_BASE_ADDR,
-		.pfn		= __phys_to_pfn(SYSPA_VIC_BASE_ADDR),
+		.virtual	= CNS21XX_VIC_BASE_VIRT,
+		.pfn		= __phys_to_pfn(CNS21XX_VIC_BASE),
 		.length		= SZ_4K,
 		.type		= MT_DEVICE
 	}

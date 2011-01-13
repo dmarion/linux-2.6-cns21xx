@@ -44,6 +44,7 @@
 
 
 #include <mach/hardware.h>
+#include <mach/cns21xx-regs.h>
 
 	.macro	disable_fiq
 	.endm
@@ -57,17 +58,17 @@
 /*
 #ifdef CONFIG_VIC_INTERRUPT
 	.macro	get_fiqnr_and_base, irqnr, irqstat, base, tmp
-	ldr	\base, =(SYSVA_VIC_BASE_ADDR + 0x140)
+	ldr	\base, =(CNS21XX_VIC_BASE_VIRT + 0x140)
 	ldr	\irqnr, [\base]
 	.endm
 
 	.macro	get_irqnr_and_base, irqnr, irqstat, base, tmp
-	ldr	\base, =(SYSVA_VIC_BASE_ADDR + 0x140)
+	ldr	\base, =(CNS21XX_VIC_BASE_VIRT + 0x140)
 	ldr	\irqnr, [\base]
 	.endm
 #else
 	.macro	get_fiqnr_and_base, irqnr, irqstat, base, tmp
-	ldr	\base, =(SYSVA_VIC_BASE_ADDR + 0x20)
+	ldr	\base, =(CNS21XX_VIC_BASE_VIRT + 0x20)
 	ldr	\irqstat, [\base]
 	mov	\irqnr, #0
 9001:
@@ -81,7 +82,7 @@
 	.endm
 
 	.macro	get_irqnr_and_base, irqnr, irqstat, base, tmp
-	ldr	\base, =(SYSVA_VIC_BASE_ADDR + 0x1C)
+	ldr	\base, =(CNS21XX_VIC_BASE_VIRT + 0x1C)
 	ldr	\irqstat, [\base]
 	mov	\irqnr, #0
 9003:
@@ -100,7 +101,7 @@
 */
 
 	.macro  get_irqnr_and_base, irqnr, irqstat, base, tmp
-	ldr     \irqstat, =(SYSVA_VIC_BASE_ADDR + 0x1C)
+	ldr     \irqstat, =(CNS21XX_VIC_BASE_VIRT + 0x1C)
 	ldr     \irqnr, [\irqstat]
 	cmp     \irqnr, #0
 	beq     2313f

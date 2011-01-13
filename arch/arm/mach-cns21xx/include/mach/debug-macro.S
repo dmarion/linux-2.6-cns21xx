@@ -23,14 +23,14 @@
  ******************************************************************************/
 
 #include <linux/linkage.h>
-#include <mach/hardware.h>
+#include <mach/cns21xx-regs.h>
 
 		.macro	addruart, rp, rv
-		mov	\rp, #(SYSPA_UART0_BASE_ADDR)		@ physical
-		mov 	\rv, #(SYSVA_UART0_BASE_ADDR & 0xFF000000)	@ virtual
-		orr	\rv, \rv, #(SYSVA_UART0_BASE_ADDR & 0x00FF0000)
-		orr	\rv, \rv, #(SYSVA_UART0_BASE_ADDR & 0x0000FF00)
-		orr	\rv, \rv, #(SYSVA_UART0_BASE_ADDR & 0x000000FF)
+		mov	\rp, #(CNS21XX_UART0_BASE)		@ physical
+		mov 	\rv, #(CNS21XX_UART0_BASE_VIRT & 0xFF000000)	@ virtual
+		orr	\rv, \rv, #(CNS21XX_UART0_BASE_VIRT & 0x00FF0000)
+		orr	\rv, \rv, #(CNS21XX_UART0_BASE_VIRT & 0x0000FF00)
+		orr	\rv, \rv, #(CNS21XX_UART0_BASE_VIRT & 0x000000FF)
 		.endm
 
 		.macro	senduart,rd,rx
