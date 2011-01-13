@@ -870,6 +870,8 @@ source "arch/arm/mach-footbridge/Kconfig"
 
 source "arch/arm/mach-gemini/Kconfig"
 
+source "arch/arm/plat-fa/Kconfig"
+
 source "arch/arm/mach-h720x/Kconfig"
 
 source "arch/arm/mach-integrator/Kconfig"
@@ -977,6 +979,9 @@ source "arch/arm/mach-w90x900/Kconfig"
 
 # Definitions to make life easier
 config ARCH_ACORN
+	bool
+
+config PLAT_FA
 	bool
 
 config PLAT_IOP
