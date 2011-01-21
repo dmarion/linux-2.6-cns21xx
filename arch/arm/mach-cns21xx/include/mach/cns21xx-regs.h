@@ -1,0 +1,104 @@
+/*******************************************************************************
+ *
+ *  Copyright (c) 2008 Cavium Networks 
+ *  Copyright (c) 2010 Damjan Marion
+ * 
+ *  This file is free software; you can redistribute it and/or modify 
+ *  it under the terms of the GNU General Public License, Version 2, as 
+ *  published by the Free Software Foundation. 
+ *
+ *  This file is distributed in the hope that it will be useful, 
+ *  but AS-IS and WITHOUT ANY WARRANTY; without even the implied warranty of 
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE, TITLE, or 
+ *  NONINFRINGEMENT.  See the GNU General Public License for more details. 
+ *
+ *  You should have received a copy of the GNU General Public License 
+ *  along with this file; if not, write to the Free Software 
+ *  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA or 
+ *  visit http://www.gnu.org/licenses/. 
+ *
+ *  This file may also be available under a different license from Cavium. 
+ *  Contact Cavium Networks for more information
+ *
+ ******************************************************************************/
+
+#ifndef __MACH_CNS21XX_REGS_H__
+#define __MACH_CNS21XX_REGS_H__
+
+/*
+ *  Physical Memory Map Definitions
+ */
+
+#define CNS21XX_FLASH_SRAM_BANK0_BASE			0x10000000
+#define CNS21XX_FLASH_SRAM_BANK1_BASE			0x11000000
+#define CNS21XX_FLASH_SRAM_BANK2_BASE			0x12000000
+#define CNS21XX_FLASH_SRAM_BANK3_BASE			0x13000000
+#define	CNS21XX_PCMCIA_ATTRIBUTE_MEMORY_BASE		0x14000000
+#define	CNS21XX_PCMCIA_COMMON_MEMORY_BASE		0x15000000
+#define	CNS21XX_PCMCIA_IO_SPACE_BASE			0x16000000
+#define	CNS21XX_IDE_DEVICE_BASE				0x18000000
+#define	CNS21XX_SDRAM_MEMORY_BASE			0x20000000
+#define	CNS21XX_GDMAC_BASE				0x60000000
+#define	CNS21XX_NIC_BASE				0x70000000
+#define	CNS21XX_SPI_BASE				0x71000000
+#define	CNS21XX_PCM_BASE				0x71000000
+#define	CNS21XX_I2C_BASE				0x71000000
+#define	CNS21XX_I2S_BASE				0x71000000
+#define	CNS21XX_DDRC_SDRC_BASE				0x72000000
+#define	CNS21XX_SMC_BASE				0x73000000
+#define	CNS21XX_PCMCIA_CONTROL_BASE			0x73000000
+#define	CNS21XX_IDE_CONTROLLER_BASE			0x74000000
+#define	CNS21XX_MISC_BASE				0x76000000
+#define	CNS21XX_POWER_MANAGEMENT_BASE			0x77000000
+#define	CNS21XX_UART0_BASE				0x78000000
+#define	CNS21XX_UART1_BASE				0x78800000
+#define	CNS21XX_TIMER_BASE				0x79000000
+#define	CNS21XX_WATCHDOG_TIMER_BASE			0x7A000000
+#define	CNS21XX_RTC_BASE				0x7B000000
+#define	CNS21XX_GPIOA_BASE				0x7C000000
+#define	CNS21XX_GPIOB_BASE				0x7C800000
+#define	CNS21XX_PCI_CONFIG_DATA_BASE			0xA0000000
+#define	CNS21XX_PCI_CONFIG_ADDR_BASE			0xA4000000
+#define	CNS21XX_PCI_IO_SPACE_BASE			0xA8000000
+#define	CNS21XX_PCI_MEMORY_SPACE_BASE			0xB0000000
+#define	CNS21XX_USB11_CONFIG_BASE			0xC0000000
+#define	CNS21XX_USB11_OPERATION_BASE			0xC4000000
+#define	CNS21XX_USB20_CONFIG_BASE			0xC8000000
+#define	CNS21XX_USB20_OPERATION_BASE			0xCC000000
+#define	CNS21XX_USB20_DEVICE_BASE			0xD0000000
+#define	CNS21XX_VIC_BASE				0xFFFFF000
+
+/*
+ *  Virtual Memory Map Definitions
+ */
+#define	CNS21XX_FLASH_BASE_VIRT				0xFF000000
+#define CNS21XX_IDE_DEVICE_BASE_VIRT			0xFFF00000
+#define CNS21XX_GDMAC_BASE_VIRT				0xFFF01000
+#define CNS21XX_NIC_BASE_VIRT				0xFFF02000
+#define CNS21XX_SPI_BASE_VIRT				0xFFF03000
+#define CNS21XX_PCM_BASE_VIRT				0xFFF04000
+#define CNS21XX_I2C_BASE_VIRT				0xFFF05000
+#define CNS21XX_I2S_BASE_VIRT				0xFFF06000
+#define CNS21XX_DDRC_SDRC_BASE_VIRT			0xFFF07000
+#define CNS21XX_SMC_BASE_VIRT				0xFFF08000
+#define CNS21XX_PCMCIA_CONTROL_BASE_VIRT		0xFFF09000
+#define CNS21XX_IDE_CONTROLLER_BASE_VIRT		0xFFF0A000
+#define CNS21XX_MISC_BASE_VIRT				0xFFF0B000
+#define CNS21XX_POWER_MANAGEMENT_BASE_VIRT		0xFFF0C000
+#define CNS21XX_UART0_BASE_VIRT				0xFFF0D000
+#define CNS21XX_UART1_BASE_VIRT				0xFFF0E000
+#define CNS21XX_TIMER_BASE_VIRT				0xFFF0F000
+#define CNS21XX_WATCHDOG_TIMER_BASE_VIRT		0xFFF10000
+#define CNS21XX_RTC_BASE_VIRT				0xFFF11000
+#define CNS21XX_GPIOA_BASE_VIRT				0xFFF12000
+#define CNS21XX_GPIOB_BASE_VIRT				0xFFF13000
+#define CNS21XX_PCI_CONFIG_DATA_BASE_VIRT		0xFFF14000
+#define CNS21XX_PCI_CONFIG_ADDR_BASE_VIRT		0xFFF15000
+#define CNS21XX_USB11_CONFIG_BASE_VIRT			0xFFF16000
+#define CNS21XX_USB11_OPERATION_BASE_VIRT		0xFFF17000
+#define CNS21XX_USB20_CONFIG_BASE_VIRT			0xFFF18000
+#define CNS21XX_USB20_OPERATION_BASE_VIRT		0xFFF19000
+#define CNS21XX_USB20_DEVICE_BASE_VIRT			0xFFF1A000
+#define CNS21XX_VIC_BASE_VIRT				0xFFF1B000
+
+#endif /* __MACH_CNS21XX_H__ */
