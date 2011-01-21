@@ -392,18 +392,19 @@ struct ohci_hcd {
 	unsigned		autostop:1;	/* rh auto stopping/stopped */
 
 	unsigned long		flags;		/* for HC bugs */
-#define	OHCI_QUIRK_AMD756	0x01			/* erratum #4 */
-#define	OHCI_QUIRK_SUPERIO	0x02			/* natsemi */
-#define	OHCI_QUIRK_INITRESET	0x04			/* SiS, OPTi, ... */
-#define	OHCI_QUIRK_BE_DESC	0x08			/* BE descriptors */
-#define	OHCI_QUIRK_BE_MMIO	0x10			/* BE registers */
-#define	OHCI_QUIRK_ZFMICRO	0x20			/* Compaq ZFMicro chipset*/
-#define	OHCI_QUIRK_NEC		0x40			/* lost interrupts */
-#define	OHCI_QUIRK_FRAME_NO	0x80			/* no big endian frame_no shift */
-#define	OHCI_QUIRK_HUB_POWER	0x100			/* distrust firmware power/oc setup */
-#define	OHCI_QUIRK_AMD_ISO	0x200			/* ISO transfers*/
-#define	OHCI_QUIRK_AMD_PREFETCH	0x400			/* pre-fetch for ISO transfer */
-#define	OHCI_QUIRK_SHUTDOWN	0x800			/* nVidia power bug */
+#define	OHCI_QUIRK_AMD756		0x01		/* erratum #4 */
+#define	OHCI_QUIRK_SUPERIO		0x02		/* natsemi */
+#define	OHCI_QUIRK_INITRESET		0x04		/* SiS, OPTi, ... */
+#define	OHCI_QUIRK_BE_DESC		0x08		/* BE descriptors */
+#define	OHCI_QUIRK_BE_MMIO		0x10		/* BE registers */
+#define	OHCI_QUIRK_ZFMICRO		0x20		/* Compaq ZFMicro chipset*/
+#define	OHCI_QUIRK_NEC			0x40		/* lost interrupts */
+#define	OHCI_QUIRK_FRAME_NO		0x80		/* no big endian frame_no shift */
+#define	OHCI_QUIRK_HUB_POWER		0x100		/* distrust firmware power/oc setup */
+#define	OHCI_QUIRK_AMD_ISO		0x200		/* ISO transfers*/
+#define	OHCI_QUIRK_AMD_PREFETCH		0x400		/* pre-fetch for ISO transfer */
+#define	OHCI_QUIRK_SHUTDOWN		0x800		/* nVidia power bug */
+#define	OHCI_QUIRK_INIT_FMINTERVAL	0x1000		/* fminterval must be initialized */
 	// there are also chip quirks/bugs in init logic
 
 	struct work_struct	nec_work;	/* Worker for NEC quirk */

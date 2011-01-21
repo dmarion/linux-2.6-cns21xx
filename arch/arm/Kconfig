@@ -300,6 +300,8 @@ config ARCH_CNS21XX
 	select PLAT_FA_TIME
 	select PLAT_FA_GPIO
 	select ARCH_REQUIRE_GPIOLIB
+	select USB_ARCH_HAS_OHCI
+	select USB_ARCH_HAS_EHCI
 	help
 	  Support for Cavium Networks ECONA CNS21XX family (ex STAR STR81XX).
 
