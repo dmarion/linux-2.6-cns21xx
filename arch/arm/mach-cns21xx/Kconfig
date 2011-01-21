@@ -2,6 +2,15 @@ if ARCH_CNS21XX
 
 menu "Cavium ECONA CNS21XX Options"
 
+config MACH_NSK330
+	bool "Support for NS-K330 NAS"
+	select ARCH_CNS21XX_SPI
+	select ARCH_CNS21XX_USB
+	select ARCH_CNS21XX_NIC
+	help
+	  Support for the NS-K330 and other CNS2132 (ex STAR STR8132) based
+	  NAS devices (WLXKJ652, Ritmo LN-86BT, etc.)
+
 config ARCH_CNS21XX_SPI
 	def_bool n
 

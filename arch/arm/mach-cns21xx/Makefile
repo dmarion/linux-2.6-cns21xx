@@ -7,3 +7,4 @@ obj-$(CONFIG_ARCH_CNS21XX_USB)			+= usb.o
 obj-$(CONFIG_ARCH_CNS21XX_NIC)			+= nic.o
 
 # Devices
+obj-$(CONFIG_MACH_NSK330)			+= device-nsk330.o
