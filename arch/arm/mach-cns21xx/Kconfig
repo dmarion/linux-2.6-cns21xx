@@ -8,6 +8,9 @@ config ARCH_CNS21XX_SPI
 config ARCH_CNS21XX_USB
 	def_bool n
 
+config ARCH_CNS21XX_NIC
+	def_bool n
+
 config ARCH_CNS21XX_EARLY_CONSOLE
 	bool "Enable UART0 port in early boot stage."
 	help

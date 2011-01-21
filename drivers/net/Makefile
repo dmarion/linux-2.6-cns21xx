@@ -257,6 +257,7 @@ obj-$(CONFIG_MLX4_CORE) += mlx4/
 obj-$(CONFIG_ENC28J60) += enc28j60.o
 obj-$(CONFIG_ETHOC) += ethoc.o
 obj-$(CONFIG_GRETH) += greth.o
+obj-$(CONFIG_CNS21XX_GEC) += cns21xx/
 
 obj-$(CONFIG_XTENSA_XT2000_SONIC) += xtsonic.o
 

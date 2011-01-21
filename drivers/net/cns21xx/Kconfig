@@ -1,0 +1,7 @@
+config CNS21XX_GEC
+	tristate  "CNS21XX Gigabit Ethernet Controller support"
+	depends on ARCH_CNS21XX
+	help
+	  If you wish to compile a kernel for Cavium Networks CNS21XX
+	  with ethernet support, then you should always answer Y to this.
+
